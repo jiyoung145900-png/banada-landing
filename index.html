@@ -49,7 +49,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="BANADA — 시간이 멈추는 곳">
 <meta property="og:description" content="프리미엄 회원제 프라이빗 라운지">
-<meta property="og:image" content="https://daisygirlclub.com/og-image.png">
+<meta property="og:image" content="https://banadameet.com/og-image.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -800,6 +800,33 @@ footer {
   text-shadow: 0 0 12px rgba(255, 30, 124, 0.5);
 }
 
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-family: 'Italiana', serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.footer-links a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--neon);
+  text-shadow: 0 0 12px rgba(255, 30, 124, 0.5);
+}
+
+.footer-divider {
+  color: var(--muted-2);
+}
+
 .footer-copy {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
@@ -1184,6 +1211,11 @@ footer {
   <!-- ★★★ [편집4-C] 영업 시간 (푸터) ★★★ -->
   <div class="footer-hours">Business Hours · 12PM — 12AM</div>
 
+  <div class="footer-links">
+    <a href="./privacy.html">개인정보처리방침</a>
+    <span class="footer-divider">·</span>
+    <a href="./terms.html">이용약관</a>
+  </div>
   <div class="footer-copy">© 2026 BANADA. All rights reserved.</div>
 </footer>
 
@@ -1273,6 +1305,12 @@ footer {
   });
 })();
 </script>
+
+<!-- ============================================
+     Salesmartly Chat Widget (WeChat)
+     자동으로 우측 하단에 채팅 버튼이 뜹니다
+     ============================================ -->
+<script src="https://plugin-code.salesmartly.com/js/project_764753_790092_1782793064.js"></script>
 
 </body>
 </html>
