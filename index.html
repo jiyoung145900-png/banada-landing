@@ -116,6 +116,9 @@ body::before {
   align-items: center;
   justify-content: center;
   padding: 80px 24px 60px;
+  padding-top: max(80px, env(safe-area-inset-top));
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
   position: relative;
   z-index: 2;
 }
@@ -438,12 +441,30 @@ section { padding: 120px 0; position: relative; z-index: 2; }
   pointer-events: none;
 }
 
-.manager-card:hover .manager-media {
-  transform: scale(1.08);
-  filter: brightness(1) contrast(1.05) saturate(1);
+/* 데스크탑: 마우스 호버 효과 */
+@media (hover: hover) {
+  .manager-card:hover .manager-media {
+    transform: scale(1.08);
+    filter: brightness(1) contrast(1.05) saturate(1);
+  }
+  .manager-card:hover { box-shadow: 0 0 40px rgba(255, 30, 124, 0.3); }
 }
 
-.manager-card:hover { box-shadow: 0 0 40px rgba(255, 30, 124, 0.3); }
+/* 모바일/터치: 탭 시 효과 */
+@media (hover: none) {
+  .manager-card:active .manager-media {
+    transform: scale(1.03);
+    filter: brightness(1) contrast(1.05) saturate(1);
+  }
+  .manager-card:active { box-shadow: 0 0 30px rgba(255, 30, 124, 0.4); }
+}
+
+/* 모바일에서도 사진 밝기 살짝 올림 (탭 안 해도 더 잘 보이게) */
+@media (hover: none) {
+  .manager-media {
+    filter: brightness(0.95) contrast(1.05) saturate(1);
+  }
+}
 
 .manager-info {
   position: absolute;
@@ -708,6 +729,9 @@ section { padding: 120px 0; position: relative; z-index: 2; }
 /* FOOTER */
 footer {
   padding: 60px 24px 40px;
+  padding-bottom: max(40px, calc(40px + env(safe-area-inset-bottom)));
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
   border-top: 1px solid var(--muted-2);
   text-align: center;
   position: relative;
@@ -778,7 +802,12 @@ footer {
 
 @media (max-width: 768px) {
   section { padding: 80px 0; }
-  .hero { padding: 60px 20px 40px; }
+  .hero { 
+    padding: 60px 20px 40px;
+    padding-top: max(60px, env(safe-area-inset-top));
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
   .hero-logo { width: 160px; height: 160px; margin-bottom: 32px; }
   .hero-cta { padding: 16px 32px; font-size: 12px; }
   .concept-grid { grid-template-columns: 1fr; gap: 16px; }
@@ -918,6 +947,7 @@ footer {
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-1.jpg"
+             fetchpriority="high"
              alt="수아">
         <!-- 영상: 위 <img> 지우고 아래로 교체:
         <video class="manager-media" src="./images/managers/manager-1.mp4"
@@ -934,6 +964,7 @@ footer {
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-2.jpg"
+             loading="lazy"
              alt="지현">
         <!-- 영상: 위 <img> 지우고 아래로 교체:
         <video class="manager-media" src="./images/managers/manager-2.mp4"
@@ -950,6 +981,7 @@ footer {
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-3.jpg"
+             loading="lazy"
              alt="유나">
         <div class="manager-info">
           <div class="manager-name">유나</div>
@@ -961,6 +993,7 @@ footer {
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-4.jpg"
+             loading="lazy"
              alt="세은">
         <div class="manager-tag new">NEW</div>
         <div class="manager-info">
@@ -973,6 +1006,7 @@ footer {
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-5.jpg"
+             loading="lazy"
              alt="예린">
         <div class="manager-info">
           <div class="manager-name">예린</div>
@@ -984,6 +1018,7 @@ footer {
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-6.jpg"
+             loading="lazy"
              alt="다혜">
         <div class="manager-tag vip">VIP</div>
         <div class="manager-info">
@@ -996,6 +1031,7 @@ footer {
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-7.jpg"
+             loading="lazy"
              alt="소미">
         <div class="manager-info">
           <div class="manager-name">소미</div>
@@ -1007,6 +1043,7 @@ footer {
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-8.jpg"
+             loading="lazy"
              alt="리아">
         <div class="manager-tag new">NEW</div>
         <div class="manager-info">
@@ -1141,7 +1178,14 @@ footer {
   resize();
   window.addEventListener('resize', resize);
 
-  const COUNT = window.innerWidth < 768 ? 30 : 60;
+  // 저사양 디바이스 감지 (CPU 코어 수, RAM)
+  const isLowEnd = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) 
+                || (navigator.deviceMemory && navigator.deviceMemory <= 4);
+  
+  // 파티클 개수: 데스크탑 60, 모바일 30, 저사양 폰 15
+  const COUNT = isLowEnd ? 15 
+              : window.innerWidth < 768 ? 30 
+              : 60;
 
   class Particle {
     constructor() { this.reset(); this.y = Math.random() * H; }
