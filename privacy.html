@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<!--
+================================================================
+  BANADA — 개인정보처리방침
+================================================================
+
+⚠️ 편집 필요 사항:
+
+  [편집A] 사업자 정보 → "사업자 정보" 섹션에서 실제 정보로 교체
+  [편집B] 개인정보 보호책임자 → 이름/이메일/전화 실제로 입력
+  [편집C] 시행일 → 실제 시행일로 변경
+
+⚠️ 법률 자문 필수!
+  이 문서는 일반 템플릿입니다. 서비스 오픈 전 반드시 변호사 검토 필요.
+================================================================
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>개인정보처리방침 · BANADA</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Italiana&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink: #0A0508;
+  --ink-2: #14080F;
+  --ink-3: #1A0E17;
+  --neon: #FF1E7C;
+  --gold: #C9A876;
+  --gold-light: #E6C89B;
+  --champagne: #F5E9EF;
+  --muted: #8E7A85;
+  --muted-2: #3A2830;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  font-family: 'Inter', 'Pretendard', -apple-system, sans-serif;
+  background: var(--ink);
+  color: var(--champagne);
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.8;
+  padding: 60px 24px;
+  padding-top: max(60px, env(safe-area-inset-top));
+}
+
+::selection { background: var(--neon); color: var(--ink); }
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Header */
+.doc-header {
+  text-align: center;
+  padding: 40px 0 60px;
+  border-bottom: 1px solid var(--muted-2);
+  margin-bottom: 60px;
+}
+
+.doc-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: contain;
+  margin: 0 auto 24px;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(255, 30, 124, 0.4));
+}
+
+.doc-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.doc-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 40px);
+  color: var(--champagne);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.doc-date {
+  font-family: 'Italiana', serif;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* Intro */
+.doc-intro {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--gold-light);
+  line-height: 1.8;
+  padding: 24px 28px;
+  background: var(--ink-2);
+  border-left: 2px solid var(--neon);
+  margin-bottom: 48px;
+  border-radius: 2px;
+}
+
+/* Sections */
+.doc-section {
+  margin-bottom: 48px;
+}
+
+.doc-section h2 {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--neon);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--muted-2);
+  text-shadow: 0 0 15px rgba(255, 30, 124, 0.3);
+}
+
+.doc-section h3 {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--gold-light);
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.doc-section p {
+  font-size: 14px;
+  color: var(--champagne);
+  margin-bottom: 16px;
+  font-weight: 300;
+}
+
+.doc-section ul, .doc-section ol {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.doc-section li {
+  font-size: 14px;
+  color: var(--champagne);
+  margin-bottom: 8px;
+  font-weight: 300;
+}
+
+.doc-section strong {
+  color: var(--neon);
+  font-weight: 600;
+}
+
+.doc-section em {
+  color: var(--gold-light);
+  font-style: normal;
+  background: rgba(255, 30, 124, 0.08);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.doc-note {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  padding: 16px 20px;
+  background: var(--ink-2);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+/* Contact table */
+.contact-info {
+  padding: 24px 28px;
+  background: var(--ink-2);
+  border-radius: 4px;
+  margin-top: 16px;
+}
+
+.contact-info dl {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 12px 20px;
+}
+
+.contact-info dt {
+  font-family: 'Italiana', serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  align-self: center;
+}
+
+.contact-info dd {
+  font-size: 14px;
+  color: var(--champagne);
+  font-weight: 300;
+}
+
+/* Back link */
+.doc-footer {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid var(--muted-2);
+  text-align: center;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--champagne);
+  border: 1px solid var(--neon);
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.4s;
+  box-shadow: 0 0 20px rgba(255, 30, 124, 0.2);
+}
+
+.back-link:hover {
+  background: var(--neon);
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(255, 30, 124, 0.5);
+}
+
+.footer-copy {
+  margin-top: 40px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 640px) {
+  body { padding: 40px 20px; }
+  .doc-header { padding: 20px 0 40px; margin-bottom: 40px; }
+  .contact-info dl { grid-template-columns: 1fr; gap: 4px; }
+  .contact-info dd { margin-bottom: 12px; }
+  .doc-section h2 { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="doc-header">
+    <img class="doc-logo" src="./images/logo.png" alt="BANADA">
+    <div class="doc-brand">BANADA</div>
+    <h1 class="doc-title">개인정보처리방침</h1>
+    <!-- ★★★ [편집C] 시행일 ★★★ -->
+    <div class="doc-date">Effective · 2026.08.01</div>
+  </div>
+
+  <div class="doc-intro">
+    주식회사 엘아이(BANADA를 운영, 이하 "회사")는 이용자의 개인정보를 매우 중요하게 여기며, 「개인정보 보호법」 등 관련 법령을 준수하고 있습니다.
+    본 방침은 회사가 어떤 개인정보를 수집하고, 어떻게 이용·관리하며, 어떤 조치를 취하고 있는지 안내드립니다.
+  </div>
+
+  <div class="doc-section">
+    <h2>사업자 정보</h2>
+    <p>본 서비스는 다음의 사업자가 운영합니다.</p>
+    <div class="contact-info">
+      <dl>
+        <dt>상호</dt>
+        <dd>주식회사 엘아이 (BANADA)</dd>
+        <dt>대표자</dt>
+        <dd>노종구</dd>
+        <dt>사업자등록번호</dt>
+        <dd>650-81-00293</dd>
+        <dt>사업장 소재지</dt>
+        <dd>서울특별시 강남구 도산대로 445, 6층 (청담동)</dd>
+        <dt>업종</dt>
+        <dd>경영 컨설팅</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>1. 수집하는 개인정보 항목</h2>
+    <p>회사는 서비스 제공을 위해 다음의 최소한의 개인정보를 수집합니다.</p>
+
+    <h3>가. 회원가입 시</h3>
+    <ul>
+      <li><strong>필수항목:</strong> 회원 코드(자동 생성), 초대코드, 접속 IP, 접속 국가·지역, 브라우저 정보</li>
+      <li><strong>선택항목:</strong> 프로필 사진, 닉네임</li>
+    </ul>
+
+    <h3>나. 서비스 이용 시</h3>
+    <ul>
+      <li>서비스 이용기록, 접속 로그, 쿠키</li>
+      <li>결제 관련 정보 (수동 처리)</li>
+      <li>고객 문의 시 대화 내용 (텔레그램 상담 기록 등)</li>
+    </ul>
+
+    <div class="doc-note">
+      ※ BANADA는 실명·주민등록번호 등 민감한 개인정보를 수집하지 않습니다. 모든 이용자는 <em>회원 코드</em>로 관리됩니다.
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>2. 개인정보 수집 및 이용 목적</h2>
+    <p>회사는 수집한 개인정보를 다음의 목적을 위해 활용합니다.</p>
+    <ol>
+      <li><strong>회원 관리:</strong> 회원제 서비스 이용에 따른 본인 확인, 부정 이용 방지</li>
+      <li><strong>서비스 제공:</strong> 매치메이킹 서비스, 상담, 콘텐츠 제공</li>
+      <li><strong>보안 및 안전:</strong> 계정 도용·부정 접속 방지, IP 기반 위치 확인</li>
+      <li><strong>서비스 개선:</strong> 접속 통계 분석, UI/UX 개선</li>
+      <li><strong>고객 응대:</strong> 문의 응답, 불만 처리</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>3. 개인정보의 보유 및 이용기간</h2>
+    <p>회사는 원칙적으로 개인정보 수집 및 이용목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다. 단, 관련 법령에 의해 보존 필요가 있는 경우 다음과 같이 보관됩니다.</p>
+    <ul>
+      <li>회원 정보: 회원 탈퇴 시까지 (탈퇴 즉시 파기)</li>
+      <li>로그인 이력: 최근 20회분</li>
+      <li>서비스 이용 기록: 3개월 (통신비밀보호법)</li>
+      <li>부정 이용 기록: 1년</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <h2>4. 개인정보의 제3자 제공</h2>
+    <p>회사는 이용자의 개인정보를 <strong>원칙적으로 외부에 제공하지 않습니다.</strong></p>
+    <p>다만, 다음의 경우에는 예외로 합니다.</p>
+    <ul>
+      <li>이용자가 사전에 동의한 경우</li>
+      <li>법령의 규정에 의거하거나, 수사 목적으로 법령에 정해진 절차와 방법에 따라 수사기관의 요구가 있는 경우</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <h2>5. 개인정보 처리 위탁</h2>
+    <p>회사는 서비스 이행을 위해 아래와 같이 개인정보 처리를 위탁하고 있으며, 관계 법령에 따라 위탁계약 시 개인정보가 안전하게 관리될 수 있도록 필요한 사항을 규정하고 있습니다.</p>
+    <ul>
+      <li><strong>Firebase (Google):</strong> 회원 데이터 저장, 실시간 데이터베이스</li>
+      <li><strong>Cloudinary:</strong> 이미지·영상 저장 및 배포</li>
+      <li><strong>Vercel:</strong> 웹사이트 호스팅</li>
+      <li><strong>ipinfo.io:</strong> IP 기반 지역 조회</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <h2>6. 이용자 및 법정대리인의 권리</h2>
+    <p>이용자는 언제든지 다음의 권리를 행사할 수 있습니다.</p>
+    <ul>
+      <li>개인정보 열람 요청</li>
+      <li>오류 정정 요청</li>
+      <li>삭제 요청</li>
+      <li>처리 정지 요청</li>
+    </ul>
+    <p>권리 행사는 텔레그램 상담 또는 회사 대표 이메일을 통해 요청하실 수 있으며, 회사는 이에 대해 지체 없이 조치하겠습니다.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>7. 개인정보의 파기</h2>
+    <p>회사는 개인정보 보유기간이 경과하거나 처리 목적이 달성된 경우 지체 없이 해당 개인정보를 파기합니다.</p>
+    <ul>
+      <li><strong>파기 절차:</strong> 처리 목적 달성 → 별도 DB로 이관(법령 근거 시) → 파기</li>
+      <li><strong>파기 방법:</strong> 전자적 파일은 복구 불가능한 방법으로 영구 삭제</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <h2>8. 개인정보의 안전성 확보 조치</h2>
+    <p>회사는 개인정보 보호를 위해 다음의 조치를 취하고 있습니다.</p>
+    <ul>
+      <li>개인정보 취급 담당자의 최소화 및 교육</li>
+      <li>Firebase 보안 규칙을 통한 접근 제어</li>
+      <li>HTTPS 통신을 통한 데이터 암호화</li>
+      <li>정기적인 자체 감사 실시</li>
+      <li>비인가 접근 방지를 위한 IP 및 접속 이력 모니터링</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <h2>9. 쿠키(Cookie) 및 유사기술의 운영</h2>
+    <p>회사는 이용자에게 개인화된 서비스를 제공하기 위해 쿠키(cookie)와 로컬 스토리지(localStorage)를 사용합니다.</p>
+    <ul>
+      <li><strong>사용 목적:</strong> 로그인 상태 유지, 사이트 이용 통계, 접속 정보 저장</li>
+      <li><strong>거부 방법:</strong> 브라우저 설정에서 쿠키 저장을 거부할 수 있으나, 일부 서비스 이용에 제한이 있을 수 있습니다.</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <h2>10. 개인정보 보호책임자</h2>
+    <p>회사는 이용자의 개인정보를 보호하고 개인정보와 관련한 불만을 처리하기 위해 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</p>
+
+    <div class="contact-info">
+      <dl>
+        <!-- ★★★ [편집B] 실제 정보로 교체 ★★★ -->
+        <dt>담당자</dt>
+        <dd>강노을</dd>
+        <dt>이메일</dt>
+        <dd>jiyoung145900@gmail.com</dd>
+        <dt>텔레그램</dt>
+        <dd>@banada_gayoung</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>11. 정책 변경에 관한 사항</h2>
+    <p>본 개인정보처리방침은 관련 법령 및 회사의 정책에 따라 변경될 수 있으며, 변경사항이 있는 경우 웹사이트를 통해 사전에 공지합니다.</p>
+    <p><strong>공고일:</strong> 2026년 8월 1일<br>
+       <strong>시행일:</strong> 2026년 8월 1일</p>
+  </div>
+
+  <div class="doc-footer">
+    <a href="./index.html" class="back-link">
+      ← 메인으로 돌아가기
+    </a>
+    <div class="footer-copy">© 2026 BANADA. All rights reserved.</div>
+  </div>
+
+</div>
+
+</body>
+</html>
