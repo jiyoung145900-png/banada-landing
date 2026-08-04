@@ -6,15 +6,37 @@
   BANADA — Premium Match Making Landing Page
 ================================================================
 
-📝 편집 가이드 — 아래 4가지만 바꾸시면 됩니다!
+📝 편집 가이드
 
-  [편집1] 로고 이미지 → HTML 안에서 "편집1" 검색 (2곳: 히어로 + 푸터)
+📁 폴더 구조 (GitHub 레포에 이렇게 만드세요):
+
+   banada-landing/
+   ├── index.html                (이 파일)
+   └── images/
+       ├── logo.png              (로고)
+       └── managers/
+           ├── manager-1.jpg     (매니저 1 — 수아)
+           ├── manager-2.jpg     (매니저 2 — 지현)
+           ├── manager-3.jpg     (매니저 3 — 유나)
+           ├── manager-4.jpg     (매니저 4 — 세은)
+           ├── manager-5.jpg     (매니저 5 — 예린)
+           ├── manager-6.jpg     (매니저 6 — 다혜)
+           ├── manager-7.jpg     (매니저 7 — 소미)
+           └── manager-8.jpg     (매니저 8 — 리아)
+
+🔧 편집이 필요한 부분:
+
   [편집2] 텔레그램 링크 → HTML 안에서 "편집2" 검색 (2곳)
-  [편집3] 매니저 정보 (사진/영상) → HTML 안에서 "편집3" 검색 (8명)
+  [편집3] 매니저 이름/지역/나이 → HTML 안에서 "편집3" 검색 (원하면)
   [편집4] 영업시간 → HTML 안에서 "편집4" 검색 (3곳)
 
-💡 매니저 카드마다 사진 or 영상 중 하나를 선택할 수 있어요!
-   기본은 사진(<img>) 이고, 영상 원하면 주석 표시만 바꾸면 됨
+💡 이미지는 폴더에 파일만 넣으면 자동으로 표시됩니다.
+   파일명을 위 구조와 정확히 똑같이 맞춰주세요!
+
+💡 매니저를 영상으로 하고 싶으면 (선택):
+   <img> 태그를 지우고 아래로 교체:
+   <video class="manager-media" src="./images/managers/manager-1.mp4"
+          autoplay muted loop playsinline></video>
 
 ================================================================
 -->
@@ -792,7 +814,7 @@ footer {
     <!-- ★★★ [편집1-A] 로고 이미지 URL을 여기서 바꾸세요 ★★★ -->
     <img
       class="hero-logo"
-      src="https://banadameet.com/icons/icon-512.png"
+      src="./images/logo.png"
       alt="BANADA">
     <!-- ★★★ 로고 끝 ★★★ -->
 
@@ -874,27 +896,31 @@ footer {
       <!-- ============================================
            ★★★ [편집3] 매니저 카드 8명 ★★★
 
-           💡 사용법 — 각 카드마다 아래 둘 중 하나를 선택:
+           📷 사진은 자동으로 표시됩니다!
+              images/managers/ 폴더에 파일만 넣으면 됨:
+              manager-1.jpg, manager-2.jpg, ... manager-8.jpg
 
-           📷 사진일 때 (기본):
-              <img class="manager-media" src="사진URL" alt="이름">
-
-           🎥 영상일 때:
-              <video class="manager-media" src="영상URL"
+           🎥 영상으로 바꾸고 싶으면:
+              해당 카드의 <img> 태그를 지우고 아래로 교체:
+              <video class="manager-media"
+                     src="./images/managers/manager-1.mp4"
                      autoplay muted loop playsinline></video>
 
-           - Cloudinary URL 그대로 붙여넣기 OK
-           - 영상은 mp4 권장, 세로 3:4 비율 최적
-           - autoplay muted loop playsinline은 꼭 유지 (모바일 자동재생 필수!)
+              (파일명 .jpg → .mp4 로 바꾸기, 나머지 그대로!)
+
+           💡 사진 팁:
+              - 크기: 세로 3:4 비율 (예: 600x800px)
+              - 용량: 500KB ~ 1MB 권장
+              - 형식: .jpg (사진 최적)
            ============================================ -->
 
       <!-- ------- [편집3-1] 매니저 1 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
-             src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80"
+             src="./images/managers/manager-1.jpg"
              alt="수아">
-        <!-- 영상으로 바꾸려면 위 <img> 지우고 아래 주석 풀기:
-        <video class="manager-media" src="여기에_영상URL"
+        <!-- 영상: 위 <img> 지우고 아래로 교체:
+        <video class="manager-media" src="./images/managers/manager-1.mp4"
                autoplay muted loop playsinline></video>
         -->
         <div class="manager-tag new">NEW</div>
@@ -907,10 +933,10 @@ footer {
       <!-- ------- [편집3-2] 매니저 2 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
-             src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&q=80"
+             src="./images/managers/manager-2.jpg"
              alt="지현">
-        <!-- 영상 예시:
-        <video class="manager-media" src="여기에_영상URL"
+        <!-- 영상: 위 <img> 지우고 아래로 교체:
+        <video class="manager-media" src="./images/managers/manager-2.mp4"
                autoplay muted loop playsinline></video>
         -->
         <div class="manager-tag vip">VIP</div>
@@ -923,7 +949,7 @@ footer {
       <!-- ------- [편집3-3] 매니저 3 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
-             src="https://images.unsplash.com/photo-1552699611-e2c208d5d9cf?w=600&q=80"
+             src="./images/managers/manager-3.jpg"
              alt="유나">
         <div class="manager-info">
           <div class="manager-name">유나</div>
@@ -934,7 +960,7 @@ footer {
       <!-- ------- [편집3-4] 매니저 4 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
-             src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80"
+             src="./images/managers/manager-4.jpg"
              alt="세은">
         <div class="manager-tag new">NEW</div>
         <div class="manager-info">
@@ -946,7 +972,7 @@ footer {
       <!-- ------- [편집3-5] 매니저 5 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
-             src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&q=80"
+             src="./images/managers/manager-5.jpg"
              alt="예린">
         <div class="manager-info">
           <div class="manager-name">예린</div>
@@ -957,7 +983,7 @@ footer {
       <!-- ------- [편집3-6] 매니저 6 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
-             src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80"
+             src="./images/managers/manager-6.jpg"
              alt="다혜">
         <div class="manager-tag vip">VIP</div>
         <div class="manager-info">
@@ -969,7 +995,7 @@ footer {
       <!-- ------- [편집3-7] 매니저 7 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
-             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80"
+             src="./images/managers/manager-7.jpg"
              alt="소미">
         <div class="manager-info">
           <div class="manager-name">소미</div>
@@ -980,7 +1006,7 @@ footer {
       <!-- ------- [편집3-8] 매니저 8 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
-             src="https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?w=600&q=80"
+             src="./images/managers/manager-8.jpg"
              alt="리아">
         <div class="manager-tag new">NEW</div>
         <div class="manager-info">
@@ -1088,7 +1114,7 @@ footer {
   <!-- ★★★ [편집1-B] 푸터 로고 이미지 (히어로와 같은 URL 권장) ★★★ -->
   <img
     class="footer-logo-img"
-    src="https://banadameet.com/icons/icon-512.png"
+    src="./images/logo.png"
     alt="BANADA">
   <!-- ★★★ 로고 끝 ★★★ -->
 
@@ -1182,4 +1208,4 @@ footer {
 </script>
 
 </body>
-</html>
+</html>ㄴ
