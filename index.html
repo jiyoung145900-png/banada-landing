@@ -1,265 +1,1185 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!--
+================================================================
+  BANADA — Premium Match Making Landing Page
+================================================================
+
+📝 편집 가이드 — 아래 4가지만 바꾸시면 됩니다!
+
+  [편집1] 로고 이미지 → HTML 안에서 "편집1" 검색 (2곳: 히어로 + 푸터)
+  [편집2] 텔레그램 링크 → HTML 안에서 "편집2" 검색 (2곳)
+  [편집3] 매니저 정보 (사진/영상) → HTML 안에서 "편집3" 검색 (8명)
+  [편집4] 영업시간 → HTML 안에서 "편집4" 검색 (3곳)
+
+💡 매니저 카드마다 사진 or 영상 중 하나를 선택할 수 있어요!
+   기본은 사진(<img>) 이고, 영상 원하면 주석 표시만 바꾸면 됨
+
+================================================================
+-->
+
 <meta charset="UTF-8">
-<title>노블레스 - 당신의 운명을 불러옵니다</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BANADA — 시간이 멈추는 곳</title>
+<meta name="description" content="BANADA. 프리미엄 회원제 프라이빗 라운지. 오늘 밤, 잊지 못할 만남이 시작됩니다.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="BANADA — 시간이 멈추는 곳">
+<meta property="og:description" content="프리미엄 회원제 프라이빗 라운지">
+<meta property="og:image" content="https://banadameet.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Italiana&family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-    :root {
-    --message-left: 50%;
-    --message-top: 380px; 
-    --region-offset-y: 6px;
-    /* 더 진하고 선명한 노블레스 골드 컬러로 변경 */
-    --point-color: #FFD700; 
-    --deep-gold: #C5A028; /* 외곽선이나 그림자용 진한 금색 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink: #0A0508;
+  --ink-2: #14080F;
+  --ink-3: #1A0E17;
+  --neon: #FF1E7C;
+  --neon-hot: #FF4D9E;
+  --gold: #C9A876;
+  --gold-light: #E6C89B;
+  --champagne: #F5E9EF;
+  --muted: #6E5A66;
+  --muted-2: #3A2830;
 }
 
-    body {
-        margin: 0;
-        background: #0a0a0a;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        height: 100vh;
-        font-family: 'Pretendard', sans-serif;
-        overflow: hidden;
-    }
+html { scroll-behavior: smooth; }
 
-    /* 노블레스 메인 캔버스 */
-    #content {
-        width: 1024px; /* 인스타그램 정방향 스타일 대응 */
-        height: 1024px;
-        background: url('bok.png') center/cover no-repeat;
-        position: relative;
-        color: var(--point-color);
-        flex-shrink: 0;
-        overflow: hidden;
-    }
-
-    /* 시간 표시 (우측 상단 럭셔리 배치) */
-   #time {
-    position: absolute;
-    top: 50px;
-    right: 60px;
-    /* 크기를 80px로 키워 가시성 확보 */
-    font-size: 80px; 
-    font-weight: 900;
-    color: var(--point-color);
-    /* 금색 광채와 검정 그림자로 입체감 부여 */
-    text-shadow: 2px 2px 4px #000, 0 0 15px rgba(255, 215, 0, 0.7);
-    letter-spacing: -2px; /* 숫자가 너무 퍼지지 않게 조절 */
+body {
+  font-family: 'Inter', 'Pretendard', -apple-system, sans-serif;
+  background: var(--ink);
+  color: var(--champagne);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
 }
 
-    /* 노블레스 문구 블록 */
-    #message {
-        position: absolute;
-        left: var(--message-left);
-        top: var(--message-top);
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: -5px;
-        width: 100%;
-        text-align: center;
-    }
+::selection { background: var(--neon); color: var(--ink); }
 
-    .line-top { 
-    font-size: 28px; 
-    font-weight: 600; 
-    color: var(--point-color); /* 문장은 금색으로 고급스럽게 */
-    letter-spacing: 2px;
-}
-    
-    #region {
-    font-size: 52px;
-    font-weight: 900;
-    color: #ffffff;
-    text-shadow: 0 0 20px var(--point-color), 2px 2px 5px #000;
-    margin-bottom: 5px;
-}
-    
-    .line-bottom { 
-    font-size: 22px; 
-    font-weight: 400; 
-    color: #cccccc;
-    letter-spacing: 1px;
+#particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
-    /* 우측 컨트롤러 레이어 */
-    #control-panel {
-        width: 450px;
-        height: 100vh;
-        background: #151515;
-        padding: 40px 30px;
-        box-sizing: border-box;
-        border-left: 1px solid var(--point-color);
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-    }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, var(--ink) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
 
-    h3 { color: var(--point-color); margin: 0; font-size: 24px; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 15px; }
-    .label { color: #888; font-size: 14px; margin-bottom: -12px; margin-top: 10px; }
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
 
-    select {
-        width: 100%;
-        padding: 15px;
-        font-size: 17px;
-        background: #000;
-        color: var(--point-color);
-        border: 1px solid #333;
-        border-radius: 4px;
-        outline: none;
-        transition: border-color 0.3s;
-    }
+/* HERO */
+.hero {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px 60px;
+  position: relative;
+  z-index: 2;
+}
 
-    select:focus { border-color: var(--point-color); }
+.hero-inner { text-align: center; max-width: 900px; }
 
-    #status {
-        margin-top: auto;
-        padding: 20px;
-        border-radius: 4px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 16px;
-        opacity: 0;
-        transition: all 0.5s;
-        border: 1px solid var(--point-color);
-        color: var(--point-color);
-    }
-    .success { opacity: 1 !important; background: rgba(212, 175, 55, 0.1); }
+.hero-logo {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 40px;
+  border-radius: 50%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 40px rgba(255, 30, 124, 0.5)) drop-shadow(0 0 80px rgba(255, 30, 124, 0.3));
+  animation: logoPulse 4s ease-in-out infinite;
+  display: block;
+}
+
+@keyframes logoPulse {
+  0%, 100% { filter: drop-shadow(0 0 40px rgba(255, 30, 124, 0.5)) drop-shadow(0 0 80px rgba(255, 30, 124, 0.3)); }
+  50% { filter: drop-shadow(0 0 60px rgba(255, 30, 124, 0.8)) drop-shadow(0 0 120px rgba(255, 30, 124, 0.5)); }
+}
+
+.hero-eyebrow {
+  font-family: 'Italiana', serif;
+  font-size: clamp(11px, 1.5vw, 14px);
+  letter-spacing: 0.6em;
+  color: var(--neon);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  text-shadow: 0 0 20px rgba(255, 30, 124, 0.6);
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: clamp(48px, 8vw, 110px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--champagne);
+  margin-bottom: 24px;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.hero-title .accent {
+  font-style: italic;
+  color: var(--neon);
+  font-weight: 400;
+  position: relative;
+  display: inline-block;
+  text-shadow: 0 0 30px rgba(255, 30, 124, 0.6), 0 0 60px rgba(255, 30, 124, 0.3);
+}
+
+.hero-title .accent::before,
+.hero-title .accent::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+.hero-title .accent::before { color: #00E5FF; transform: translate(-2px, 0); }
+.hero-title .accent::after { color: #FF1E7C; transform: translate(2px, 0); }
+
+.hero-sub {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: clamp(15px, 1.8vw, 20px);
+  color: var(--gold-light);
+  letter-spacing: 0.1em;
+  margin-bottom: 56px;
+  animation: fadeInUp 1s ease-out 0.7s both;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 44px;
+  background: transparent;
+  color: var(--champagne);
+  border: 1px solid var(--neon);
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 1s ease-out 0.9s both;
+  box-shadow: 0 0 30px rgba(255, 30, 124, 0.2), inset 0 0 20px rgba(255, 30, 124, 0.05);
+}
+
+.hero-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 30, 124, 0.4) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.8s;
+}
+
+.hero-cta:hover {
+  background: var(--neon);
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 0 60px rgba(255, 30, 124, 0.6), 0 10px 40px rgba(255, 30, 124, 0.4);
+}
+.hero-cta:hover::before { transform: translateX(100%); }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--muted);
+  font-family: 'Italiana', serif;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+
+.scroll-hint::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--neon), transparent);
+  margin: 12px auto 0;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, 0); opacity: 0.4; }
+  50% { transform: translate(-50%, 8px); opacity: 1; }
+}
+
+section { padding: 120px 0; position: relative; z-index: 2; }
+
+.section-eyebrow {
+  font-family: 'Italiana', serif;
+  font-size: 12px;
+  letter-spacing: 0.6em;
+  color: var(--neon);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  text-shadow: 0 0 15px rgba(255, 30, 124, 0.5);
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.1;
+  color: var(--champagne);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+.section-title .italic {
+  font-style: italic;
+  color: var(--neon);
+  font-weight: 400;
+}
+
+.section-lead {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+/* CONCEPT */
+.concept-header { text-align: center; margin-bottom: 80px; }
+.concept-header .section-lead { margin: 24px auto 0; }
+
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+
+.concept-card {
+  padding: 48px 32px;
+  background: linear-gradient(180deg, var(--ink-2), var(--ink-3));
+  border: 1px solid var(--muted-2);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.concept-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  opacity: 0.4;
+}
+
+.concept-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255, 30, 124, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.concept-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--neon);
+  box-shadow: 0 20px 60px rgba(255, 30, 124, 0.15);
+}
+
+.concept-card:hover::after { opacity: 1; }
+
+.concept-number {
+  font-family: 'Italiana', serif;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--neon);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.concept-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 32px;
+  color: var(--champagne);
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+.concept-text {
+  font-family: 'Inter', 'Pretendard', sans-serif;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* MANAGERS */
+.managers { padding: 120px 0 140px; }
+
+.managers-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 64px;
+  flex-wrap: wrap;
+}
+
+.managers-header-left { flex: 1; min-width: 280px; }
+
+.managers-count {
+  font-family: 'Italiana', serif;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  align-self: flex-end;
+}
+
+.managers-count .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 44px;
+  font-style: italic;
+  color: var(--neon);
+  font-weight: 400;
+  vertical-align: middle;
+  margin-right: 6px;
+  text-shadow: 0 0 20px rgba(255, 30, 124, 0.5);
+}
+
+.manager-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.manager-card {
+  aspect-ratio: 3 / 4;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  cursor: pointer;
+  background: var(--ink-2);
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.6s;
+}
+
+/* ★ 사진(img) / 영상(video) 공통 스타일 */
+.manager-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s;
+  filter: brightness(0.85) contrast(1.05) saturate(0.9);
+}
+
+.manager-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10, 5, 8, 0.85) 100%);
+  pointer-events: none;
+}
+
+.manager-card:hover .manager-media {
+  transform: scale(1.08);
+  filter: brightness(1) contrast(1.05) saturate(1);
+}
+
+.manager-card:hover { box-shadow: 0 0 40px rgba(255, 30, 124, 0.3); }
+
+.manager-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 24px 20px 20px;
+  z-index: 2;
+}
+
+.manager-name {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--champagne);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.manager-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Italiana', serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--neon);
+  text-transform: uppercase;
+}
+
+.manager-meta .dot {
+  width: 3px;
+  height: 3px;
+  background: var(--neon);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--neon);
+}
+
+.manager-tag {
+  position: absolute;
+  top: 16px; right: 16px;
+  padding: 6px 12px;
+  background: rgba(10, 5, 8, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 30, 124, 0.4);
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--champagne);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+.manager-tag.new { color: var(--neon); border-color: var(--neon); }
+.manager-tag.vip { color: var(--gold-light); border-color: var(--gold); }
+
+/* TESTIMONIALS */
+.testimonials { background: linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 50%, var(--ink) 100%); }
+.testimonials-header { text-align: center; margin-bottom: 72px; }
+.testimonials-header .section-lead { margin: 24px auto 0; }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.testimonial {
+  padding: 40px 32px;
+  background: rgba(20, 8, 15, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--muted-2);
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.testimonial::before {
+  content: '"';
+  position: absolute;
+  top: 16px; right: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px;
+  color: var(--neon);
+  opacity: 0.15;
+  line-height: 1;
+}
+
+.testimonial:hover {
+  border-color: var(--neon);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(255, 30, 124, 0.15);
+}
+
+.testimonial-stars { display: flex; gap: 3px; margin-bottom: 20px; }
+
+.testimonial-stars span {
+  color: var(--neon);
+  font-size: 14px;
+  text-shadow: 0 0 8px rgba(255, 30, 124, 0.6);
+}
+
+.testimonial-text {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-size: 18px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--champagne);
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.testimonial-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid var(--muted-2);
+}
+
+.testimonial-author {
+  font-family: 'Italiana', serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.testimonial-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+/* FINAL CTA */
+.final-cta { text-align: center; padding: 160px 0; position: relative; }
+
+.final-cta::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(255, 30, 124, 0.15) 0%, transparent 60%);
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+.final-cta-eyebrow {
+  font-family: 'Italiana', serif;
+  font-size: 13px;
+  letter-spacing: 0.6em;
+  color: var(--neon);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  text-shadow: 0 0 20px rgba(255, 30, 124, 0.6);
+}
+
+.final-cta-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 1.1;
+  color: var(--champagne);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.final-cta-title .italic {
+  font-style: italic;
+  color: var(--neon);
+  text-shadow: 0 0 30px rgba(255, 30, 124, 0.5);
+}
+
+.final-cta-sub {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: 20px;
+  color: var(--gold-light);
+  margin-bottom: 60px;
+  letter-spacing: 0.05em;
+}
+
+.telegram-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 56px;
+  background: var(--neon);
+  color: var(--ink);
+  border: none;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 0 60px rgba(255, 30, 124, 0.5), 0 20px 60px rgba(255, 30, 124, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.telegram-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: shimmerCTA 3s ease-in-out infinite;
+}
+
+@keyframes shimmerCTA {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+.telegram-btn:hover {
+  background: var(--neon-hot);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 80px rgba(255, 30, 124, 0.7), 0 30px 80px rgba(255, 30, 124, 0.4);
+}
+
+.telegram-btn svg { width: 20px; height: 20px; }
+
+.availability {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--gold-light);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.pulse-dot {
+  width: 8px; height: 8px;
+  background: #34C759;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #34C759;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* FOOTER */
+footer {
+  padding: 60px 24px 40px;
+  border-top: 1px solid var(--muted-2);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-logo-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: contain;
+  margin: 0 auto 16px;
+  display: block;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 10px rgba(255, 30, 124, 0.3));
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.footer-tagline {
+  font-family: 'Italiana', serif;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.footer-hours {
+  font-family: 'Italiana', serif;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--neon);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  text-shadow: 0 0 12px rgba(255, 30, 124, 0.5);
+}
+
+.footer-copy {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  section { padding: 80px 0; }
+  .hero { padding: 60px 20px 40px; }
+  .hero-logo { width: 160px; height: 160px; margin-bottom: 32px; }
+  .hero-cta { padding: 16px 32px; font-size: 12px; }
+  .concept-grid { grid-template-columns: 1fr; gap: 16px; }
+  .concept-card { padding: 36px 24px; }
+  .manager-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .telegram-btn { padding: 20px 40px; font-size: 14px; }
+  .managers-header { flex-direction: column; align-items: flex-start; }
+  .managers-count { align-self: flex-start; }
+  .final-cta { padding: 100px 0; }
+}
+
+@media (max-width: 480px) {
+  .manager-grid { grid-template-columns: 1fr; }
+  .manager-card { aspect-ratio: 4 / 5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
 </style>
 </head>
 <body>
 
-<div id="content">
-    <div id="time"></div>
-    <div id="message">
-        <div id="region">지역을 선택하세요</div> <div class="line-top">이곳에서 시작될 당신의 운명</div>
-        <div class="line-bottom">노블레스가 소중한 인연을 연결합니다</div>
+<canvas id="particles"></canvas>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <!-- ★★★ [편집1-A] 로고 이미지 URL을 여기서 바꾸세요 ★★★ -->
+    <img
+      class="hero-logo"
+      src="https://banadameet.com/icons/icon-512.png"
+      alt="BANADA">
+    <!-- ★★★ 로고 끝 ★★★ -->
+
+    <div class="hero-eyebrow">Premium · Private · Members Only</div>
+    <h1 class="hero-title">
+      시간이 멈추는 <span class="accent" data-text="곳">곳</span>
+    </h1>
+    <p class="hero-sub">Where the night begins, and time surrenders.</p>
+
+    <!-- ★★★ [편집2-A] 텔레그램 링크 (첫 번째) ★★★ -->
+    <a href="https://t.me/여기에_텔레그램_주소" target="_blank" class="hero-cta">
+      지금 상담하기
+      <span>→</span>
+    </a>
+    <!-- ★★★ 텔레그램 링크 끝 ★★★ -->
+
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- ============================================
+     CONCEPT
+     ============================================ -->
+<section class="concept">
+  <div class="wrap">
+    <div class="concept-header reveal">
+      <div class="section-eyebrow">The Experience</div>
+      <h2 class="section-title">보이지 않는 곳에서<br>가장 <span class="italic">특별한 밤</span>이</h2>
+      <p class="section-lead">
+        검증된 매니저, 완전한 프라이버시, 그리고 오직 회원만을 위한 시간.
+        BANADA는 아무에게나 열리지 않는 문입니다.
+      </p>
     </div>
-</div>
+    <div class="concept-grid">
+      <div class="concept-card reveal">
+        <div class="concept-number">— 01 · Private</div>
+        <h3 class="concept-title">완전한 익명</h3>
+        <p class="concept-text">
+          가입부터 만남까지 실명 없이. 회원 코드로만 소통되는 완벽한 프라이버시.
+          당신의 시간은 오직 당신의 것입니다.
+        </p>
+      </div>
+      <div class="concept-card reveal">
+        <div class="concept-number">— 02 · Premium</div>
+        <h3 class="concept-title">검증된 매니저</h3>
+        <p class="concept-text">
+          까다로운 심사와 인터뷰를 거친 프리미엄 매니저만 등록됩니다.
+          외모, 매너, 대화 — 모든 것이 기대 이상.
+        </p>
+      </div>
+      <div class="concept-card reveal">
+        <div class="concept-number">— 03 · Nocturnal</div>
+        <h3 class="concept-title">밤의 시간</h3>
+        <p class="concept-text">
+          <!-- ★★★ [편집4-A] 영업 시간 문구 (필요시 수정) ★★★ -->
+          정오 12시부터 자정 12시까지, BANADA는 언제나 준비되어 있습니다.
+          당신의 밤이 시작되는 순간, 우리는 이미 그 자리에.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div id="control-panel">
-    <h3>👑 NOBLESSE MGMT</h3>
-    
-    <div class="label">KOREAN SELECTION</div>
-    <select id="sido-ko"></select>
-    <select id="sigungu-ko"></select>
+<!-- ============================================
+     MANAGERS
+     ============================================ -->
+<section class="managers">
+  <div class="wrap">
+    <div class="managers-header reveal">
+      <div class="managers-header-left">
+        <div class="section-eyebrow">The Selection</div>
+        <h2 class="section-title">오늘 밤, <span class="italic">그녀</span></h2>
+      </div>
+      <div class="managers-count"><span class="num">200+</span> Registered Managers</div>
+    </div>
 
-    <div style="margin: 20px 0;"></div>
+    <div class="manager-grid">
 
-    <div class="label">CHINESE SELECTION (연동)</div>
-    <select id="sido-cn"></select>
-    <select id="sigungu-cn"></select>
+      <!-- ============================================
+           ★★★ [편집3] 매니저 카드 8명 ★★★
 
-    <div id="status">IMAGE COPIED SUCCESSFULLY</div>
-</div>
+           💡 사용법 — 각 카드마다 아래 둘 중 하나를 선택:
+
+           📷 사진일 때 (기본):
+              <img class="manager-media" src="사진URL" alt="이름">
+
+           🎥 영상일 때:
+              <video class="manager-media" src="영상URL"
+                     autoplay muted loop playsinline></video>
+
+           - Cloudinary URL 그대로 붙여넣기 OK
+           - 영상은 mp4 권장, 세로 3:4 비율 최적
+           - autoplay muted loop playsinline은 꼭 유지 (모바일 자동재생 필수!)
+           ============================================ -->
+
+      <!-- ------- [편집3-1] 매니저 1 ------- -->
+      <div class="manager-card reveal">
+        <img class="manager-media"
+             src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80"
+             alt="수아">
+        <!-- 영상으로 바꾸려면 위 <img> 지우고 아래 주석 풀기:
+        <video class="manager-media" src="여기에_영상URL"
+               autoplay muted loop playsinline></video>
+        -->
+        <div class="manager-tag new">NEW</div>
+        <div class="manager-info">
+          <div class="manager-name">수아</div>
+          <div class="manager-meta"><span>강남</span><span class="dot"></span><span>25</span></div>
+        </div>
+      </div>
+
+      <!-- ------- [편집3-2] 매니저 2 ------- -->
+      <div class="manager-card reveal">
+        <img class="manager-media"
+             src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&q=80"
+             alt="지현">
+        <!-- 영상 예시:
+        <video class="manager-media" src="여기에_영상URL"
+               autoplay muted loop playsinline></video>
+        -->
+        <div class="manager-tag vip">VIP</div>
+        <div class="manager-info">
+          <div class="manager-name">지현</div>
+          <div class="manager-meta"><span>청담</span><span class="dot"></span><span>27</span></div>
+        </div>
+      </div>
+
+      <!-- ------- [편집3-3] 매니저 3 ------- -->
+      <div class="manager-card reveal">
+        <img class="manager-media"
+             src="https://images.unsplash.com/photo-1552699611-e2c208d5d9cf?w=600&q=80"
+             alt="유나">
+        <div class="manager-info">
+          <div class="manager-name">유나</div>
+          <div class="manager-meta"><span>홍대</span><span class="dot"></span><span>24</span></div>
+        </div>
+      </div>
+
+      <!-- ------- [편집3-4] 매니저 4 ------- -->
+      <div class="manager-card reveal">
+        <img class="manager-media"
+             src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80"
+             alt="세은">
+        <div class="manager-tag new">NEW</div>
+        <div class="manager-info">
+          <div class="manager-name">세은</div>
+          <div class="manager-meta"><span>이태원</span><span class="dot"></span><span>26</span></div>
+        </div>
+      </div>
+
+      <!-- ------- [편집3-5] 매니저 5 ------- -->
+      <div class="manager-card reveal">
+        <img class="manager-media"
+             src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&q=80"
+             alt="예린">
+        <div class="manager-info">
+          <div class="manager-name">예린</div>
+          <div class="manager-meta"><span>성수</span><span class="dot"></span><span>23</span></div>
+        </div>
+      </div>
+
+      <!-- ------- [편집3-6] 매니저 6 ------- -->
+      <div class="manager-card reveal">
+        <img class="manager-media"
+             src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80"
+             alt="다혜">
+        <div class="manager-tag vip">VIP</div>
+        <div class="manager-info">
+          <div class="manager-name">다혜</div>
+          <div class="manager-meta"><span>압구정</span><span class="dot"></span><span>28</span></div>
+        </div>
+      </div>
+
+      <!-- ------- [편집3-7] 매니저 7 ------- -->
+      <div class="manager-card reveal">
+        <img class="manager-media"
+             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80"
+             alt="소미">
+        <div class="manager-info">
+          <div class="manager-name">소미</div>
+          <div class="manager-meta"><span>강남</span><span class="dot"></span><span>25</span></div>
+        </div>
+      </div>
+
+      <!-- ------- [편집3-8] 매니저 8 ------- -->
+      <div class="manager-card reveal">
+        <img class="manager-media"
+             src="https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?w=600&q=80"
+             alt="리아">
+        <div class="manager-tag new">NEW</div>
+        <div class="manager-info">
+          <div class="manager-name">리아</div>
+          <div class="manager-meta"><span>홍대</span><span class="dot"></span><span>24</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     TESTIMONIALS
+     ============================================ -->
+<section class="testimonials">
+  <div class="wrap">
+    <div class="testimonials-header reveal">
+      <div class="section-eyebrow">Voices</div>
+      <h2 class="section-title">회원들이 남긴 <span class="italic">밤의 기록</span></h2>
+      <p class="section-lead">
+        실제 회원들의 후기. BANADA에서 보낸 시간이 어땠는지, 그들의 목소리로.
+      </p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial reveal">
+        <div class="testimonial-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testimonial-text">
+          "다른 곳이랑 완전 달라요. 사진이랑 실물이 똑같은 것도 처음이고,
+          매니저 매너도 최상급. 앞으로 여기만 이용할 것 같습니다."
+        </p>
+        <div class="testimonial-meta">
+          <span class="testimonial-author">M****7823</span>
+          <span class="testimonial-date">2 weeks ago</span>
+        </div>
+      </div>
+      <div class="testimonial reveal">
+        <div class="testimonial-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testimonial-text">
+          "저녁에 문의하니까 몇 분 안에 답장 왔음. 응대부터 다른 클래스.
+          이래서 프리미엄인가 싶더라고요. 강추."
+        </p>
+        <div class="testimonial-meta">
+          <span class="testimonial-author">M****1245</span>
+          <span class="testimonial-date">1 month ago</span>
+        </div>
+      </div>
+      <div class="testimonial reveal">
+        <div class="testimonial-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testimonial-text">
+          "개인정보 걱정 없이 편하게 이용할 수 있는 게 제일 좋아요.
+          매니저 퀄리티는 말할 것도 없고. 진짜 배신 안 하는 곳."
+        </p>
+        <div class="testimonial-meta">
+          <span class="testimonial-author">M****9061</span>
+          <span class="testimonial-date">3 weeks ago</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FINAL CTA
+     ============================================ -->
+<section class="final-cta" id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="final-cta-eyebrow">Ready?</div>
+      <h2 class="final-cta-title">
+        오늘 밤은,<br>
+        <span class="italic">당신의 것</span>
+      </h2>
+      <p class="final-cta-sub">텔레그램으로 지금 상담하세요.</p>
+
+      <!-- ★★★ [편집2-B] 텔레그램 링크 (두 번째) ★★★ -->
+      <a href="https://t.me/여기에_텔레그램_주소" target="_blank" class="telegram-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+        </svg>
+        상담 시작하기
+      </a>
+      <!-- ★★★ 텔레그램 링크 끝 ★★★ -->
+
+      <div class="availability">
+        <span class="pulse-dot"></span>
+        <!-- ★★★ [편집4-B] 영업 시간 (필요시 수정) ★★★ -->
+        <span>Open Now · 12:00 PM — 12:00 AM</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer>
+
+  <!-- ★★★ [편집1-B] 푸터 로고 이미지 (히어로와 같은 URL 권장) ★★★ -->
+  <img
+    class="footer-logo-img"
+    src="https://banadameet.com/icons/icon-512.png"
+    alt="BANADA">
+  <!-- ★★★ 로고 끝 ★★★ -->
+
+  <div class="footer-logo">BANADA</div>
+  <div class="footer-tagline">Premium Match Making · Members Only</div>
+
+  <!-- ★★★ [편집4-C] 영업 시간 (푸터) ★★★ -->
+  <div class="footer-hours">Business Hours · 12PM — 12AM</div>
+
+  <div class="footer-copy">© 2026 BANADA. All rights reserved.</div>
+</footer>
 
 <script>
-// 전국 17개 시도 풀 데이터 (사장님 요청대로 빠짐없이 복구)
-const regionData = {
-    "서울특별시": { cn: "首尔", sigungu: { "강남구": "江南区", "강동구": "江东区", "강북구": "江北区", "강서구": "江西区", "관악구": "冠岳区", "광진구": "广津区", "구로구": "九老区", "금천구": "衿川区", "노원구": "芦原区", "도봉구": "道峰区", "동대문구": "东大门区", "동작구": "铜雀区", "마포구": "麻浦区", "서대문구": "西大门区", "서초구": "瑞草区", "성동구": "城东区", "성북구": "城北区", "송파구": "松坡区", "양천구": "阳川区", "영등포구": "永登浦区", "용산구": "龙山区", "은평구": "恩平区", "종로구": "钟路区", "중구": "中区", "중랑구": "中浪区" } },
-    "부산광역시": { cn: "釜山", sigungu: { "강서구": "江西区", "금정구": "金井区", "기장군": "机张郡", "남구": "南区", "동구": "东区", "동래구": "东莱区", "부산진구": "釜山镇区", "북구": "北区", "사상구": "沙上区", "사하구": "沙下区", "서구": "西区", "수영구": "水营区", "연제구": "莲堤区", "영도구": "影岛区", "중구": "中区", "해운대구": "海云台区" } },
-    "경기도": { cn: "京畿道", sigungu: { "수원시": "水原市", "성남시": "城南市", "의정부시": "议政府市", "안양시": "安养市", "부천시": "富川市", "광명시": "光明市", "평택시": "平泽市", "동두천시": "东두川市", "안산시": "安山市", "고양시": "高阳市", "과천시": "果川市", "구리시": "九里市", "남양주시": "南杨州市", "오산시": "乌山市", "시흥시": "始兴市", "군포시": "军浦市", "의왕시": "义王市", "하남시": "河南市", "용인시": "龙仁市", "파주시": "坡州市", "이천시": "利川市", "안성시": "安城市", "김포시": "金浦市", "화성시": "华城市", "광주시": "广州市", "양주시": "杨州市", "포천시": "抱川市", "여주시": "骊州市", "연천군": "涟川郡", "가평군": "加平郡", "양평군": "杨平郡" } },
-    "인천광역시": { cn: "仁川", sigungu: { "강화군": "江华郡", "계양구": "桂阳区", "남동구": "南洞区", "동구": "东区", "미추홀구": "弥邹忽区", "부평구": "富平区", "서구": "西区", "연수구": "延寿区", "옹진군": "瓮津郡", "중구": "中区" } },
-    "대구광역시": { cn: "大邱", sigungu: { "남구": "南区", "달서구": "达西区", "달성군": "达城郡", "동구": "东区", "북구": "北区", "서구": "西区", "수성구": "寿城区", "중구": "中区", "군위군": "军威郡" } },
-    "광주광역시": { cn: "光州", sigungu: { "광산구": "光山区", "남구": "南区", "동구": "东区", "북구": "北区", "서구": "西区" } },
-    "대전광역시": { cn: "大田", sigungu: { "대덕구": "大德区", "동구": "东区", "서구": "西区", "유성구": "儒城区", "중구": "中구" } },
-    "울산광역시": { cn: "蔚山", sigungu: { "남구": "南区", "동구": "东区", "북구": "北区", "울주군": "蔚州郡", "중구": "中区" } },
-    "강원특별자치도": { cn: "江原道", sigungu: { "춘천시": "春川市", "강릉시": "江陵市", "원주시": "原州市", "동해시": "东海市", "태백시": "太白市", "속초시": "束草市", "삼척시": "三陟市", "홍천군": "洪川郡", "횡성군": "横城郡", "영월군": "宁越郡", "평창군": "平昌郡", "정선군": "旌善郡", "철원군": "铁原郡", "화천군": "华川郡", "양구군": "杨口郡", "인제군": "麟蹄郡", "고성군": "高城郡", "양양군": "襄阳郡" } },
-    "충청북도": { cn: "忠清北道", sigungu: { "청주시": "清州市", "충주시": "忠州市", "제천시": "堤川市", "보은군": "报恩郡", "옥천군": "沃川郡", "영동군": "永同郡", "증평군": "曾坪郡", "진천군": "镇川郡", "괴산군": "槐山郡", "음성군": "阴城郡", "단양군": "丹阳郡" } },
-    "충청남도": { cn: "忠清南道", sigungu: { "천안시": "天安市", "공주시": "公州市", "보령시": "保宁市", "아산시": "牙山市", "서산시": "瑞山市", "논산시": "论山市", "계룡시": "鸡龙市", "당진시": "唐津市", "금산군": "锦山郡", "부여군": "扶余郡", "서천군": "舒川郡", "청양군": "青阳郡", "홍성군": "洪城郡", "예산군": "礼山郡", "태안군": "泰安郡" } },
-    "전북특별자치도": { cn: "全罗北道", sigungu: { "전주시": "全州市", "군산시": "群山市", "익산시": "益山市", "정읍시": "井邑市", "남원시": "南原市", "김제시": "金堤市", "완주군": "完州郡", "진안군": "镇安郡", "무주군": "茂朱郡", "장수군": "长수郡", "임실군": "任实郡", "순창군": "淳昌郡", "고창군": "高敞郡", "부안군": "扶安郡" } },
-    "전남특별자치도": { cn: "全罗南道", sigungu: { "목포시": "木浦市", "여수시": "丽水市", "순천시": "顺天市", "나주시": "罗州市", "광양시": "光阳市", "담양군": "潭양郡", "곡성군": "谷城郡", "구례군": "求礼郡", "보성군": "宝城郡", "화순군": "和顺郡", "장흥군": "长兴郡", "강진군": "康津郡", "해남군": "海南郡", "영암군": "灵岩郡", "무안군": "务安郡", "함평군": "咸平郡", "영광군": "灵光郡", "장성군": "长城郡", "완도군": "莞岛郡", "진도군": "珍岛郡", "신안군": "新安郡" } },
-    "경상북도": { cn: "庆尚北道", sigungu: { "포항시": "浦项市", "경주시": "庆州市", "김천시": "金泉市", "안동시": "安东市", "구미시": "龟尾市", "영주시": "荣州市", "영천시": "永川市", "상주시": "尚州市", "문경시": "闻庆市", "경산시": "庆山市", "의성군": "义城郡", "청송군": "青松郡", "영양군": "英阳郡", "영덕군": "盈德郡", "청도군": "清道郡", "고령군": "高灵郡", "성주군": "星州郡", "칠곡군": "漆谷郡", "예천군": "醴泉郡", "봉화군": "奉化郡", "울진군": "蔚珍郡", "울릉군": "郁陵郡" } },
-    "경상남도": { cn: "庆尚南道", sigungu: { "창원시": "昌原市", "진주시": "晋州市", "통영시": "统盈市", "사천시": "泗川市", "김해시": "金海市", "밀양시": "密阳市", "거제시": "巨济市", "양산시": "梁山市", "의령군": "宜宁郡", "함안군": "咸安郡", "창녕군": "昌宁郡", "고성군": "固城郡", "남해군": "南海郡", "하동군": "河东郡", "산청군": "山清郡", "함양군": "咸阳郡", "거창군": "居昌郡", "합천군": "陕川郡" } },
-    "제주특별자치도": { cn: "济州道", sigungu: { "제주시": "济州市", "서귀포시": "西归浦市" } },
-    "세종특별자치시": { cn: "世宗", sigungu: { "세종시": "世宗市" } }
-};
+(function() {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  let particles = [];
 
-const sidoKo = document.getElementById('sido-ko');
-const sigunguKo = document.getElementById('sigungu-ko');
-const sidoCn = document.getElementById('sido-cn');
-const sigunguCn = document.getElementById('sigungu-cn');
-const regionDisplay = document.getElementById('region');
-const statusMsg = document.getElementById('status');
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
 
-function init() {
-    sidoKo.innerHTML = `<option value="">Region Select</option>`;
-    sidoCn.innerHTML = `<option value="">选择 地区</option>`;
-    Object.keys(regionData).forEach(ko => {
-        sidoKo.innerHTML += `<option value="${ko}">${ko}</option>`;
-        sidoCn.innerHTML += `<option value="${ko}">${regionData[ko].cn}</option>`;
+  const COUNT = window.innerWidth < 768 ? 30 : 60;
+
+  class Particle {
+    constructor() { this.reset(); this.y = Math.random() * H; }
+    reset() {
+      this.x = Math.random() * W;
+      this.y = H + Math.random() * 200;
+      this.vx = (Math.random() - 0.5) * 0.15;
+      this.vy = -0.15 - Math.random() * 0.45;
+      this.size = 0.5 + Math.random() * 1.8;
+      this.baseOpacity = 0.15 + Math.random() * 0.55;
+      this.opacity = this.baseOpacity;
+      this.twinkle = Math.random() * Math.PI * 2;
+      this.twinkleSpeed = 0.01 + Math.random() * 0.03;
+      this.color = Math.random() < 0.7 ? [255, 30, 124] : [201, 168, 118];
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.twinkle += this.twinkleSpeed;
+      this.opacity = this.baseOpacity * (0.4 + 0.6 * Math.abs(Math.sin(this.twinkle)));
+      if (this.y < -20 || this.x < -20 || this.x > W + 20) this.reset();
+    }
+    draw() {
+      const [r, g, b] = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${this.opacity})`;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = `rgba(${r},${g},${b},${this.opacity * 0.8})`;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
     });
-}
+  }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+  els.forEach(el => io.observe(el));
+})();
 
-function updateSigunguList(val) {
-    sigunguKo.innerHTML = `<option value="">City Select</option>`;
-    sigunguCn.innerHTML = `<option value="">选择 市郡区</option>`;
-    if (val && regionData[val]) {
-        const list = regionData[val].sigungu;
-        Object.keys(list).forEach(ko => {
-            sigunguKo.innerHTML += `<option value="${ko}">${ko}</option>`;
-            sigunguCn.innerHTML += `<option value="${ko}">${list[ko]}</option>`;
-        });
-    }
-}
-
-sidoKo.onchange = (e) => {
-    const val = e.target.value;
-    sidoCn.value = val;
-    updateSigunguList(val);
-    regionDisplay.textContent = val || "지역을 선택하세요";
-};
-
-sidoCn.onchange = (e) => {
-    const val = e.target.value;
-    sidoKo.value = val;
-    updateSigunguList(val);
-    regionDisplay.textContent = val || "지역을 선택하세요";
-};
-
-sigunguKo.onchange = async (e) => {
-    const val = e.target.value;
-    sigunguCn.value = val;
-    if (val) {
-        regionDisplay.textContent = `${sidoKo.value} ${val}`;
-        await copyToClipboard();
-    }
-};
-
-sigunguCn.onchange = async (e) => {
-    const val = e.target.value;
-    sigunguKo.value = val;
-    if (val) {
-        regionDisplay.textContent = `${sidoKo.value} ${val}`;
-        await copyToClipboard();
-    }
-};
-
-setInterval(() => {
-    const d = new Date();
-    document.getElementById('time').textContent = 
-        `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
-}, 1000);
-
-async function copyToClipboard() {
-    const content = document.getElementById('content');
-    try {
-        const canvas = await html2canvas(content, { scale: 1, useCORS: true });
-        canvas.toBlob(async (blob) => {
-            const item = new ClipboardItem({ "image/png": blob });
-            await navigator.clipboard.write([item]);
-            statusMsg.classList.add('success');
-            setTimeout(() => statusMsg.classList.remove('success'), 2000);
-        });
-    } catch (err) { console.error(err); }
-}
-
-init();
+(function() {
+  const cards = document.querySelectorAll('.manager-card');
+  cards.forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.06) + 's';
+  });
+})();
 </script>
+
 </body>
 </html>
