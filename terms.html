@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<!--
+================================================================
+  BANADA — 이용약관
+================================================================
+
+⚠️ 편집 필요 사항:
+
+  [편집A] 사업자 정보 → 실제 상호, 대표자, 주소, 사업자번호로 교체
+  [편집B] 시행일 → 실제 시행일로 변경
+  [편집C] 각 조항 검토 → 실제 서비스와 맞는지 확인
+
+⚠️ 법률 자문 필수!
+  이 문서는 일반 템플릿입니다. 서비스 오픈 전 반드시 변호사 검토 필요.
+================================================================
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>이용약관 · BANADA</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Italiana&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink: #0A0508;
+  --ink-2: #14080F;
+  --ink-3: #1A0E17;
+  --neon: #FF1E7C;
+  --gold: #C9A876;
+  --gold-light: #E6C89B;
+  --champagne: #F5E9EF;
+  --muted: #8E7A85;
+  --muted-2: #3A2830;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  font-family: 'Inter', 'Pretendard', -apple-system, sans-serif;
+  background: var(--ink);
+  color: var(--champagne);
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.8;
+  padding: 60px 24px;
+  padding-top: max(60px, env(safe-area-inset-top));
+}
+
+::selection { background: var(--neon); color: var(--ink); }
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.doc-header {
+  text-align: center;
+  padding: 40px 0 60px;
+  border-bottom: 1px solid var(--muted-2);
+  margin-bottom: 60px;
+}
+
+.doc-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: contain;
+  margin: 0 auto 24px;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(255, 30, 124, 0.4));
+}
+
+.doc-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.doc-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 40px);
+  color: var(--champagne);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.doc-date {
+  font-family: 'Italiana', serif;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.doc-intro {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--gold-light);
+  line-height: 1.8;
+  padding: 24px 28px;
+  background: var(--ink-2);
+  border-left: 2px solid var(--neon);
+  margin-bottom: 48px;
+  border-radius: 2px;
+}
+
+.doc-section {
+  margin-bottom: 40px;
+}
+
+.doc-section h2 {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--neon);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--muted-2);
+  text-shadow: 0 0 15px rgba(255, 30, 124, 0.3);
+}
+
+.doc-section h3 {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--gold-light);
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.doc-section p {
+  font-size: 14px;
+  color: var(--champagne);
+  margin-bottom: 16px;
+  font-weight: 300;
+}
+
+.doc-section ul, .doc-section ol {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.doc-section li {
+  font-size: 14px;
+  color: var(--champagne);
+  margin-bottom: 8px;
+  font-weight: 300;
+}
+
+.doc-section strong {
+  color: var(--neon);
+  font-weight: 600;
+}
+
+.doc-section em {
+  color: var(--gold-light);
+  font-style: normal;
+  background: rgba(255, 30, 124, 0.08);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.doc-note {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  padding: 16px 20px;
+  background: var(--ink-2);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.doc-footer {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid var(--muted-2);
+  text-align: center;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--champagne);
+  border: 1px solid var(--neon);
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.4s;
+  box-shadow: 0 0 20px rgba(255, 30, 124, 0.2);
+}
+
+.back-link:hover {
+  background: var(--neon);
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(255, 30, 124, 0.5);
+}
+
+.footer-copy {
+  margin-top: 40px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 640px) {
+  body { padding: 40px 20px; }
+  .doc-header { padding: 20px 0 40px; margin-bottom: 40px; }
+  .doc-section h2 { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="doc-header">
+    <img class="doc-logo" src="./images/logo.png" alt="BANADA">
+    <div class="doc-brand">BANADA</div>
+    <h1 class="doc-title">이용약관</h1>
+    <!-- ★★★ [편집B] 시행일 ★★★ -->
+    <div class="doc-date">Effective · 2026.08.01</div>
+  </div>
+
+  <div class="doc-intro">
+    본 약관은 주식회사 엘아이(BANADA를 운영, 이하 "회사")가 제공하는 프리미엄 회원제 매치메이킹 서비스(이하 "서비스")의 이용 조건 및 회사와 이용자 간의 권리·의무·책임사항을 규정합니다.
+  </div>
+
+  <div class="doc-section">
+    <h2>사업자 정보</h2>
+    <p>본 서비스는 다음의 사업자가 운영합니다.</p>
+    <div class="contact-info" style="padding: 24px 28px; background: var(--ink-2); border-radius: 4px; margin-top: 16px;">
+      <dl style="display: grid; grid-template-columns: 140px 1fr; gap: 12px 20px;">
+        <dt style="font-family: 'Italiana', serif; font-size: 11px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; align-self: center;">상호</dt>
+        <dd style="font-size: 14px; color: var(--champagne); font-weight: 300;">주식회사 엘아이 (BANADA)</dd>
+        <dt style="font-family: 'Italiana', serif; font-size: 11px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; align-self: center;">대표자</dt>
+        <dd style="font-size: 14px; color: var(--champagne); font-weight: 300;">노종구</dd>
+        <dt style="font-family: 'Italiana', serif; font-size: 11px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; align-self: center;">사업자등록번호</dt>
+        <dd style="font-size: 14px; color: var(--champagne); font-weight: 300;">650-81-00293</dd>
+        <dt style="font-family: 'Italiana', serif; font-size: 11px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; align-self: center;">사업장 소재지</dt>
+        <dd style="font-size: 14px; color: var(--champagne); font-weight: 300;">서울특별시 강남구 도산대로 445, 6층 (청담동)</dd>
+        <dt style="font-family: 'Italiana', serif; font-size: 11px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; align-self: center;">업종</dt>
+        <dd style="font-size: 14px; color: var(--champagne); font-weight: 300;">경영 컨설팅</dd>
+        <dt style="font-family: 'Italiana', serif; font-size: 11px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; align-self: center;">개업일</dt>
+        <dd style="font-size: 14px; color: var(--champagne); font-weight: 300;">2015년 12월 18일</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>제1조 (목적)</h2>
+    <p>본 약관은 회사가 운영하는 서비스의 이용과 관련하여 회사와 이용자 사이의 권리, 의무 및 책임사항 등을 규정함을 목적으로 합니다.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>제2조 (용어의 정의)</h2>
+    <p>본 약관에서 사용하는 용어의 정의는 다음과 같습니다.</p>
+    <ol>
+      <li><strong>"서비스"</strong>란 회사가 제공하는 회원제 매치메이킹 및 부가 서비스를 말합니다.</li>
+      <li><strong>"이용자"</strong>란 본 약관에 동의하고 서비스를 이용하는 회원을 말합니다.</li>
+      <li><strong>"회원 코드"</strong>란 이용자 식별을 위해 부여되는 고유 번호입니다.</li>
+      <li><strong>"초대코드"</strong>란 신규 가입 시 사용되는 인증 코드입니다.</li>
+      <li><strong>"매니저"</strong>란 회사가 검증하여 등록한 서비스 제공 파트너를 말합니다.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>제3조 (약관의 효력 및 변경)</h2>
+    <ol>
+      <li>본 약관은 회사가 서비스 화면에 게시함으로써 효력이 발생합니다.</li>
+      <li>회사는 필요 시 약관을 변경할 수 있으며, 변경된 약관은 공지 즉시 효력을 가집니다.</li>
+      <li>이용자가 변경된 약관에 동의하지 않는 경우 서비스 이용을 중단하고 탈퇴할 수 있습니다.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>제4조 (이용 자격)</h2>
+    <p>본 서비스는 <strong>만 19세 이상의 성인</strong>만 이용할 수 있으며, 다음에 해당하는 자는 이용이 제한됩니다.</p>
+    <ul>
+      <li>만 19세 미만의 미성년자</li>
+      <li>과거 회사로부터 이용 제한을 받은 자</li>
+      <li>본인 명의가 아닌 초대코드로 가입을 시도한 자</li>
+      <li>기타 회사가 부적절하다고 판단한 자</li>
+    </ul>
+    <div class="doc-note">
+      ※ 이용자는 가입 시 본인이 <em>만 19세 이상의 성인</em>임을 확인합니다.
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>제5조 (회원 가입 및 계정)</h2>
+    <ol>
+      <li>회원 가입은 회사가 정한 절차에 따라 초대코드를 입력하여 진행합니다.</li>
+      <li>이용자는 가입 시 정확한 정보를 제공해야 하며, 허위 정보 제공 시 서비스 이용이 제한될 수 있습니다.</li>
+      <li>회원 코드는 이용자에게 자동 발급되며, 본인 관리 책임하에 사용됩니다.</li>
+      <li>계정을 타인에게 양도, 대여, 판매하는 행위는 금지됩니다.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>제6조 (서비스의 제공)</h2>
+    <p>회사는 이용자에게 다음의 서비스를 제공합니다.</p>
+    <ul>
+      <li>매니저 프로필 열람</li>
+      <li>텔레그램을 통한 상담 및 예약</li>
+      <li>이벤트·프로모션 참여</li>
+      <li>기타 회사가 정하는 부가 서비스</li>
+    </ul>
+    <p>회사는 서비스의 품질 향상을 위해 서비스 내용을 변경할 수 있으며, 이 경우 사전 공지합니다.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>제7조 (서비스 이용시간)</h2>
+    <p>서비스는 <strong>매일 12:00 PM ~ 12:00 AM (정오 12시 ~ 자정 12시)</strong> 이용 가능합니다.</p>
+    <p>다만, 시스템 점검이나 불가피한 사유로 일시 중단될 수 있으며, 이 경우 회사는 사전 또는 사후 공지합니다.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>제8조 (이용자의 의무)</h2>
+    <p>이용자는 다음 각 호의 행위를 하여서는 안 됩니다.</p>
+    <ul>
+      <li>타인의 정보 도용</li>
+      <li>회사가 게시한 정보의 무단 변경</li>
+      <li>회사 및 제3자의 명예를 훼손하거나 업무를 방해하는 행위</li>
+      <li>외설, 폭력, 사행성 등 공공질서 및 미풍양속에 반하는 정보를 유포</li>
+      <li>매니저에 대한 폭언, 성희롱, 위협</li>
+      <li>서비스를 이용하여 얻은 정보를 회사 동의 없이 복제, 유통하는 행위</li>
+      <li>회사가 승인하지 않은 결제 수단 이용</li>
+      <li>기타 관련 법령에 위배되는 행위</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <h2>제9조 (이용 제한 및 계정 정지)</h2>
+    <ol>
+      <li>회사는 이용자가 본 약관을 위반하거나 서비스의 정상적인 운영을 방해한 경우, 사전 통보 없이 서비스 이용을 제한하거나 계정을 정지할 수 있습니다.</li>
+      <li>이용 제한 사유:
+        <ul>
+          <li>제8조에서 정한 이용자의 의무 위반</li>
+          <li>매니저 또는 타 회원에 대한 반복적 불편 제기</li>
+          <li>부정한 방법으로 서비스 이용</li>
+          <li>기타 회사가 부적절하다고 판단한 행위</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>제10조 (다이아 및 결제)</h2>
+    <ol>
+      <li>서비스 내 <em>다이아</em>는 회사가 운영하는 가상의 포인트로, 서비스 내에서만 사용 가능합니다.</li>
+      <li>다이아는 <strong>현금으로 환불되지 않으며,</strong> 유효기간 및 사용 조건은 별도 정책에 따릅니다.</li>
+      <li>결제는 회사가 승인한 방식(수동 처리 등)으로 진행되며, 결제 완료 후 회사가 다이아를 지급합니다.</li>
+      <li>다이아 사용 내역은 마이페이지에서 확인할 수 있습니다.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>제11조 (환불 정책)</h2>
+    <ol>
+      <li>미사용 다이아에 한하여 결제일로부터 <strong>7일 이내</strong> 환불 요청 가능합니다.</li>
+      <li>서비스 이용 후 이용자의 단순 변심에 의한 환불은 불가합니다.</li>
+      <li>회사의 귀책사유로 서비스가 제공되지 못한 경우 전액 환불됩니다.</li>
+      <li>환불 요청은 텔레그램 상담 또는 이메일을 통해 접수합니다.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>제12조 (회사의 의무)</h2>
+    <ol>
+      <li>회사는 안정적인 서비스 제공을 위해 최선을 다합니다.</li>
+      <li>회사는 이용자의 개인정보를 관련 법령에 따라 보호합니다. (별도 개인정보처리방침 참조)</li>
+      <li>회사는 이용자의 문의에 대해 신속히 답변할 수 있도록 노력합니다.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>제13조 (책임의 제한)</h2>
+    <ol>
+      <li>회사는 천재지변, 불가항력, 이용자의 귀책사유로 인한 서비스 이용 장애에 대해 책임을 지지 않습니다.</li>
+      <li>회사는 이용자와 매니저 또는 제3자 간에 서비스를 매개로 발생한 분쟁에 대해 개입할 의무가 없으며, 그로 인한 손해를 배상할 책임이 없습니다.</li>
+      <li>회사는 이용자가 서비스를 이용하여 기대하는 수익을 얻지 못하거나 상실한 것에 대해 책임을 지지 않습니다.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>제14조 (분쟁 해결)</h2>
+    <ol>
+      <li>회사와 이용자 간 발생한 분쟁은 상호 성실히 협의하여 해결하도록 노력합니다.</li>
+      <li>협의가 이루어지지 않을 경우, 「민사소송법」상 관할 법원에 소를 제기할 수 있습니다.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <h2>부칙</h2>
+    <p><strong>공고일:</strong> 2026년 8월 1일<br>
+       <strong>시행일:</strong> 2026년 8월 1일</p>
+  </div>
+
+  <div class="doc-footer">
+    <a href="./index.html" class="back-link">
+      ← 메인으로 돌아가기
+    </a>
+    <div class="footer-copy">© 2026 BANADA. All rights reserved.</div>
+  </div>
+
+</div>
+
+</body>
+</html>
