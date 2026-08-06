@@ -26,17 +26,10 @@
 
 🔧 편집이 필요한 부분:
 
-  [편집2] 텔레그램 링크 → HTML 안에서 "편집2" 검색 (2곳)
-  [편집3] 매니저 이름/지역/나이 → HTML 안에서 "편집3" 검색 (원하면)
+  [편집2] 매니저 이름/지역/나이 → HTML 안에서 "편집3" 검색 (원하면)
   [편집4] 영업시간 → HTML 안에서 "편집4" 검색 (3곳)
 
-💡 이미지는 폴더에 파일만 넣으면 자동으로 표시됩니다.
-   파일명을 위 구조와 정확히 똑같이 맞춰주세요!
-
-💡 매니저를 영상으로 하고 싶으면 (선택):
-   <img> 태그를 지우고 아래로 교체:
-   <video class="manager-media" src="./images/managers/manager-1.mp4"
-          autoplay muted loop playsinline></video>
+💡 CTA 상담 버튼 → 자동으로 Salesmartly 채팅 위젯 열림 (텔레그램 X)
 
 ================================================================
 -->
@@ -54,7 +47,7 @@
 <link rel="icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Italiana&family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -443,7 +436,6 @@ section {
   will-change: transform;
 }
 
-/* ★ 사진(img) / 영상(video) 공통 스타일 */
 .manager-media {
   position: absolute;
   inset: 0;
@@ -462,7 +454,6 @@ section {
   pointer-events: none;
 }
 
-/* 데스크탑: 마우스 호버 효과 */
 @media (hover: hover) {
   .manager-card:hover .manager-media {
     transform: scale(1.08);
@@ -471,17 +462,12 @@ section {
   .manager-card:hover { box-shadow: 0 0 40px rgba(255, 30, 124, 0.3); }
 }
 
-/* 모바일/터치: 탭 시 효과 */
 @media (hover: none) {
   .manager-card:active .manager-media {
     transform: scale(1.03);
     filter: brightness(1) contrast(1.05) saturate(1);
   }
   .manager-card:active { box-shadow: 0 0 30px rgba(255, 30, 124, 0.4); }
-}
-
-/* 모바일에서도 사진 밝기 살짝 올림 (탭 안 해도 더 잘 보이게) */
-@media (hover: none) {
   .manager-media {
     filter: brightness(0.95) contrast(1.05) saturate(1);
   }
@@ -624,11 +610,7 @@ section {
 }
 
 /* FINAL CTA */
-.final-cta { text-align: center; padding: 160px 0; position: relative; }
-
-.final-cta {
-  overflow: hidden;
-}
+.final-cta { text-align: center; padding: 160px 0; position: relative; overflow: hidden; }
 
 .final-cta::before {
   content: '';
@@ -683,7 +665,8 @@ section {
   letter-spacing: 0.05em;
 }
 
-.telegram-btn {
+/* ★ 대형 CTA 버튼 - 텔레그램 아이콘 제거, 상담 아이콘으로 변경 */
+.chat-cta-btn {
   display: inline-flex;
   align-items: center;
   gap: 16px;
@@ -705,7 +688,7 @@ section {
   overflow: hidden;
 }
 
-.telegram-btn::before {
+.chat-cta-btn::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -719,13 +702,13 @@ section {
   50% { transform: translateX(100%); }
 }
 
-.telegram-btn:hover {
+.chat-cta-btn:hover {
   background: var(--neon-hot);
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 0 80px rgba(255, 30, 124, 0.7), 0 30px 80px rgba(255, 30, 124, 0.4);
 }
 
-.telegram-btn svg { width: 20px; height: 20px; }
+.chat-cta-btn svg { width: 20px; height: 20px; }
 
 .availability {
   display: flex;
@@ -820,6 +803,7 @@ footer {
   color: var(--gold);
   text-decoration: none;
   transition: color 0.3s;
+  cursor: pointer;
 }
 
 .footer-links a:hover {
@@ -838,9 +822,7 @@ footer {
   letter-spacing: 0.1em;
 }
 
-/* ============================================
-   Legal 팝업 모달 (개인정보처리방침 / 이용약관)
-   ============================================ */
+/* Legal 팝업 모달 */
 .legal-modal {
   display: none;
   position: fixed;
@@ -1046,7 +1028,6 @@ footer {
   font-weight: 300;
 }
 
-/* body 스크롤 잠금 (모달 열렸을 때) */
 body.modal-open {
   overflow: hidden;
 }
@@ -1101,7 +1082,7 @@ body.modal-open {
   .concept-card { padding: 36px 24px; }
   .manager-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .testimonials-grid { grid-template-columns: 1fr; }
-  .telegram-btn { padding: 20px 40px; font-size: 14px; }
+  .chat-cta-btn { padding: 20px 40px; font-size: 14px; }
   .managers-header { flex-direction: column; align-items: flex-start; }
   .managers-count { align-self: flex-start; }
   .final-cta { padding: 100px 0; }
@@ -1127,12 +1108,10 @@ body.modal-open {
 <section class="hero">
   <div class="hero-inner">
 
-    <!-- ★★★ [편집1-A] 로고 이미지 URL을 여기서 바꾸세요 ★★★ -->
     <img
       class="hero-logo"
       src="./images/logo.png"
       alt="BANADA">
-    <!-- ★★★ 로고 끝 ★★★ -->
 
     <div class="hero-eyebrow">Premium · Private · Members Only</div>
     <h1 class="hero-title">
@@ -1140,12 +1119,11 @@ body.modal-open {
     </h1>
     <p class="hero-sub">Where the night begins, and time surrenders.</p>
 
-    <!-- ★★★ [편집2-A] 텔레그램 링크 (첫 번째) ★★★ -->
-    <a href="https://t.me/banada_yula" target="_blank" class="hero-cta">
-      지금 상담하기
+    <!-- ★★★ Hero CTA - 클릭 시 우측 하단 채팅 위젯 자동 오픈 ★★★ -->
+    <a href="#" onclick="openChat(); return false;" class="hero-cta">
+      1:1 상담하기
       <span>→</span>
     </a>
-    <!-- ★★★ 텔레그램 링크 끝 ★★★ -->
 
   </div>
   <div class="scroll-hint">Scroll</div>
@@ -1218,37 +1196,11 @@ body.modal-open {
 
     <div class="manager-grid">
 
-      <!-- ============================================
-           ★★★ [편집3] 매니저 카드 8명 ★★★
-
-           📷 사진은 자동으로 표시됩니다!
-              images/managers/ 폴더에 파일만 넣으면 됨:
-              manager-1.jpg, manager-2.jpg, ... manager-8.jpg
-
-           🎥 영상으로 바꾸고 싶으면:
-              해당 카드의 <img> 태그를 지우고 아래로 교체:
-              <video class="manager-media"
-                     src="./images/managers/manager-1.mp4"
-                     autoplay muted loop playsinline></video>
-
-              (파일명 .jpg → .mp4 로 바꾸기, 나머지 그대로!)
-
-           💡 사진 팁:
-              - 크기: 세로 3:4 비율 (예: 600x800px)
-              - 용량: 500KB ~ 1MB 권장
-              - 형식: .jpg (사진 최적)
-           ============================================ -->
-
-      <!-- ------- [편집3-1] 매니저 1 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-1.jpg"
              fetchpriority="high"
              alt="수아">
-        <!-- 영상: 위 <img> 지우고 아래로 교체:
-        <video class="manager-media" src="./images/managers/manager-1.mp4"
-               autoplay muted loop playsinline></video>
-        -->
         <div class="manager-tag new">NEW</div>
         <div class="manager-info">
           <div class="manager-name">수아</div>
@@ -1256,16 +1208,11 @@ body.modal-open {
         </div>
       </div>
 
-      <!-- ------- [편집3-2] 매니저 2 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-2.jpg"
              loading="lazy"
              alt="지현">
-        <!-- 영상: 위 <img> 지우고 아래로 교체:
-        <video class="manager-media" src="./images/managers/manager-2.mp4"
-               autoplay muted loop playsinline></video>
-        -->
         <div class="manager-tag vip">VIP</div>
         <div class="manager-info">
           <div class="manager-name">지현</div>
@@ -1273,7 +1220,6 @@ body.modal-open {
         </div>
       </div>
 
-      <!-- ------- [편집3-3] 매니저 3 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-3.jpg"
@@ -1285,7 +1231,6 @@ body.modal-open {
         </div>
       </div>
 
-      <!-- ------- [편집3-4] 매니저 4 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-4.jpg"
@@ -1298,7 +1243,6 @@ body.modal-open {
         </div>
       </div>
 
-      <!-- ------- [편집3-5] 매니저 5 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-5.jpg"
@@ -1310,7 +1254,6 @@ body.modal-open {
         </div>
       </div>
 
-      <!-- ------- [편집3-6] 매니저 6 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-6.jpg"
@@ -1323,7 +1266,6 @@ body.modal-open {
         </div>
       </div>
 
-      <!-- ------- [편집3-7] 매니저 7 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-7.jpg"
@@ -1335,7 +1277,6 @@ body.modal-open {
         </div>
       </div>
 
-      <!-- ------- [편집3-8] 매니저 8 ------- -->
       <div class="manager-card reveal">
         <img class="manager-media"
              src="./images/managers/manager-8.jpg"
@@ -1419,16 +1360,15 @@ body.modal-open {
         오늘 밤은,<br>
         <span class="italic">당신의 것</span>
       </h2>
-      <p class="final-cta-sub">텔레그램으로 지금 상담하세요.</p>
+      <p class="final-cta-sub">지금 상담을 시작해보세요.</p>
 
-      <!-- ★★★ [편집2-B] 텔레그램 링크 (두 번째) ★★★ -->
-      <a href="https://t.me/banada_yula" target="_blank" class="telegram-btn">
+      <!-- ★★★ Final CTA - 클릭 시 우측 하단 채팅 위젯 자동 오픈 ★★★ -->
+      <a href="#" onclick="openChat(); return false;" class="chat-cta-btn">
         <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+          <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
         </svg>
-        상담 시작하기
+        1:1 상담 시작하기
       </a>
-      <!-- ★★★ 텔레그램 링크 끝 ★★★ -->
 
       <div class="availability">
         <span class="pulse-dot"></span>
@@ -1444,12 +1384,10 @@ body.modal-open {
      ============================================ -->
 <footer>
 
-  <!-- ★★★ [편집1-B] 푸터 로고 이미지 (히어로와 같은 URL 권장) ★★★ -->
   <img
     class="footer-logo-img"
     src="./images/logo.png"
     alt="BANADA">
-  <!-- ★★★ 로고 끝 ★★★ -->
 
   <div class="footer-logo">BANADA</div>
   <div class="footer-tagline">Premium Match Making · Members Only</div>
@@ -1466,6 +1404,9 @@ body.modal-open {
 </footer>
 
 <script>
+/* ============================================
+   ★ 파티클 배경 애니메이션
+   ============================================ */
 (function() {
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
@@ -1479,11 +1420,9 @@ body.modal-open {
   resize();
   window.addEventListener('resize', resize);
 
-  // 저사양 디바이스 감지 (CPU 코어 수, RAM)
   const isLowEnd = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) 
                 || (navigator.deviceMemory && navigator.deviceMemory <= 4);
   
-  // 파티클 개수: 데스크탑 60, 모바일 30, 저사양 폰 15
   const COUNT = isLowEnd ? 15 
               : window.innerWidth < 768 ? 30 
               : 60;
@@ -1531,6 +1470,9 @@ body.modal-open {
   loop();
 })();
 
+/* ============================================
+   ★ Scroll Reveal 애니메이션
+   ============================================ */
 (function() {
   const els = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
@@ -1544,14 +1486,87 @@ body.modal-open {
   els.forEach(el => io.observe(el));
 })();
 
+/* ============================================
+   ★ 매니저 카드 순차 애니메이션
+   ============================================ */
 (function() {
   const cards = document.querySelectorAll('.manager-card');
   cards.forEach((card, i) => {
     card.style.transitionDelay = (i * 0.06) + 's';
   });
 })();
-</script>
 
+/* ============================================
+   ★★★ 채팅 위젯 열기 함수 (Salesmartly 자동 연동) ★★★
+   ------------------------------------------------------------
+   상담 CTA 버튼 클릭 시 우측 하단 채팅 위젯을 자동으로 엽니다.
+   여러 방법을 순차적으로 시도해서 확실히 열리도록 함:
+   
+   1) Salesmartly 공식 API 호출
+   2) 위젯 버튼 자동 클릭
+   3) 실패 시 위젯이 있는 위치로 스크롤 + 안내
+   ============================================ */
+function openChat() {
+  // 1) Salesmartly 공식 API 시도 (여러 가능한 이름들)
+  const globalMethods = [
+    () => window.SM && window.SM.chat && window.SM.chat.open && (window.SM.chat.open(), true),
+    () => window.SMChat && window.SMChat.open && (window.SMChat.open(), true),
+    () => window.salesmartly && window.salesmartly.open && (window.salesmartly.open(), true),
+    () => window.$salesmartly && (window.$salesmartly('open'), true),
+    () => window.smChat && window.smChat.open && (window.smChat.open(), true),
+  ];
+
+  for (const method of globalMethods) {
+    try {
+      if (method()) return;
+    } catch (e) {
+      // 다음 방법 시도
+    }
+  }
+
+  // 2) 위젯 버튼 자동 클릭 시도 (다양한 CSS 선택자)
+  const selectors = [
+    '#sm-live-chat-container button',
+    '#sm-widget-btn',
+    '.sm-chat-btn',
+    '[id^="sm-live"]',
+    '[class*="sm-chat"]',
+    '[class*="sm-widget"]',
+    '[id*="salesmartly"] button',
+    '[class*="salesmartly"] button',
+  ];
+
+  for (const sel of selectors) {
+    const el = document.querySelector(sel);
+    if (el && typeof el.click === 'function') {
+      el.click();
+      return;
+    }
+  }
+
+  // 3) 위젯 iframe 안의 버튼 클릭 시도
+  const iframes = document.querySelectorAll('iframe');
+  for (const iframe of iframes) {
+    if (iframe.src && iframe.src.includes('salesmartly')) {
+      try {
+        iframe.contentWindow.postMessage({ type: 'open' }, '*');
+        return;
+      } catch (e) {}
+    }
+  }
+
+  // 4) 모두 실패 - 화면 하단으로 스크롤 (위젯이 우측 하단에 있음)
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth'
+  });
+
+  // 사용자 안내 (0.8초 뒤 표시 - 스크롤 애니메이션 이후)
+  setTimeout(() => {
+    alert('잠시만요! 우측 하단의 💬 채팅 버튼을 클릭해주세요.\n\n(채팅 위젯이 아직 로딩 중일 수 있습니다)');
+  }, 800);
+}
+</script>
 
 <!-- ============================================
      개인정보처리방침 팝업
@@ -1663,7 +1678,6 @@ body.modal-open {
         <dl>
           <dt>담당자</dt><dd>지윤</dd>
           <dt>이메일</dt><dd>support@banadameet.com</dd>
-          <dt>텔레그램</dt><dd>https://t.me/banadaevent</dd>
         </dl>
       </div>
     </div>
@@ -1757,7 +1771,7 @@ body.modal-open {
 
     <div class="legal-section">
       <h3>제6조 (서비스의 제공)</h3>
-      <p>회사는 매니저 프로필 열람, 텔레그램 상담, 이벤트 참여 등의 서비스를 제공합니다.</p>
+      <p>회사는 매니저 프로필 열람, 1:1 상담, 이벤트 참여 등의 서비스를 제공합니다.</p>
     </div>
 
     <div class="legal-section">
@@ -1829,7 +1843,7 @@ body.modal-open {
 
 <script>
 /* ============================================
-   Legal 모달 열기/닫기
+   ★ Legal 모달 열기/닫기
    ============================================ */
 function openModal(type) {
   const modal = document.getElementById(type + '-modal');
@@ -1868,8 +1882,7 @@ document.querySelectorAll('.legal-modal').forEach(function(modal) {
 </script>
 
 <!-- ============================================
-     Salesmartly Chat Widget (WeChat)
-     자동으로 우측 하단에 채팅 버튼이 뜹니다
+     Salesmartly Chat Widget - 우측 하단 자동 표시
      ============================================ -->
 <script src="https://plugin-code.salesmartly.com/js/project_764753_790092_1782793064.js"></script>
 
