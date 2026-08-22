@@ -37,7 +37,6 @@ body {
 }
 img { max-width: 100%; display: block; }
 
-/* ========== 애니메이션 ========== */
 @keyframes logoPulse {
   0%, 100% { filter: drop-shadow(0 0 40px rgba(255, 30, 124, 0.5)); }
   50% { filter: drop-shadow(0 0 60px rgba(255, 30, 124, 0.9)); }
@@ -63,7 +62,6 @@ img { max-width: 100%; display: block; }
   50% { box-shadow: 0 15px 60px rgba(212, 175, 55, 0.6); }
 }
 
-/* ========== Hero ========== */
 .hero {
   position: relative; min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
@@ -171,7 +169,6 @@ img { max-width: 100%; display: block; }
   animation: scrollBounce 2s ease-in-out infinite;
 }
 
-/* ========== Sections ========== */
 .section { padding: 100px 20px; background: #0f070c; }
 .section.alt { background: linear-gradient(180deg, #0a0508 0%, #1a1015 100%); }
 .section.dark { background: #0a0508; }
@@ -202,7 +199,6 @@ img { max-width: 100%; display: block; }
   font-weight: 700;
 }
 
-/* ========== Concept ========== */
 .concept-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -232,7 +228,6 @@ img { max-width: 100%; display: block; }
   line-height: 1.7;
 }
 
-/* ========== Managers ========== */
 .manager-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -299,7 +294,6 @@ img { max-width: 100%; display: block; }
   background: #D4AF37; color: #0a0508;
 }
 
-/* ========== Regions ========== */
 .region-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -326,7 +320,6 @@ img { max-width: 100%; display: block; }
   font-weight: 600; letter-spacing: 1px;
 }
 
-/* ========== Testimonials ========== */
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -360,7 +353,6 @@ img { max-width: 100%; display: block; }
   font-size: 12px; color: rgba(255, 255, 255, 0.5);
 }
 
-/* ========== FAQ ========== */
 .faq-list {
   max-width: 800px; margin: 0 auto;
   display: flex; flex-direction: column; gap: 12px;
@@ -390,7 +382,6 @@ img { max-width: 100%; display: block; }
 }
 .faq-item.open .faq-a { display: block; }
 
-/* ========== Final CTA ========== */
 .final-cta {
   padding: 120px 20px;
   background: linear-gradient(180deg, #0a0508 0%, #2a1520 50%, #0a0508 100%);
@@ -430,7 +421,6 @@ img { max-width: 100%; display: block; }
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* ========== Footer ========== */
 .footer {
   padding: 60px 20px 40px;
   background: #000; text-align: center;
@@ -446,6 +436,16 @@ img { max-width: 100%; display: block; }
   font-size: 14px; color: rgba(255, 255, 255, 0.5);
   font-style: italic; margin-bottom: 30px; letter-spacing: 2px;
 }
+.footer-links {
+  display: flex; justify-content: center; gap: 32px;
+  margin-bottom: 24px; flex-wrap: wrap;
+}
+.footer-links a {
+  color: rgba(255,255,255,0.6); text-decoration: none;
+  font-size: 12px; letter-spacing: 2px;
+  transition: color 0.2s; cursor: pointer;
+}
+.footer-links a:hover { color: #D4AF37; }
 .footer-info {
   font-size: 12px; color: rgba(255, 255, 255, 0.4);
   line-height: 1.8;
@@ -460,7 +460,6 @@ img { max-width: 100%; display: block; }
 </head>
 <body>
 
-<!-- ═══════ Hero ═══════ -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
@@ -499,7 +498,6 @@ img { max-width: 100%; display: block; }
   <div class="scroll-hint">Scroll</div>
 </section>
 
-<!-- ═══════ Concept ═══════ -->
 <section class="section">
   <div class="section-header">
     <div class="eyebrow">THE EXPERIENCE</div>
@@ -526,7 +524,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ═══════ Managers ═══════ -->
 <section class="section alt">
   <div class="section-header">
     <div class="eyebrow">PREMIUM MANAGERS</div>
@@ -550,7 +547,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ═══════ Regions ═══════ -->
 <section class="section">
   <div class="section-header">
     <div class="eyebrow">NATIONWIDE</div>
@@ -572,7 +568,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ═══════ Testimonials ═══════ -->
 <section class="section alt">
   <div class="section-header">
     <div class="eyebrow">REVIEWS</div>
@@ -606,7 +601,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ═══════ FAQ ═══════ -->
 <section class="section dark">
   <div class="section-header">
     <div class="eyebrow">FAQ</div>
@@ -621,12 +615,11 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ═══════ Final CTA ═══════ -->
 <section class="final-cta">
   <div class="final-content">
     <div class="final-eyebrow">✦ NOW OPEN ✦</div>
     <h2 class="final-title">지금 <span class="gold">BANADA</span>와<br/>새로운 경험을 시작하세요</h2>
-    <p class="final-desc">24시간 실시간 상담으로 궁금한 점을 바로 해결해드립니다</p>
+    <p class="final-desc">매일 정오부터 자정까지 실시간 상담으로 궁금한 점을 바로 해결해드립니다</p>
     <button class="final-cta-btn" onclick="openChat()">
       💬 지금 상담하기
       <span class="cta-arrow">→</span>
@@ -635,10 +628,14 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ═══════ Footer ═══════ -->
 <footer class="footer">
   <div class="footer-logo">BANADA</div>
   <div class="footer-slogan">시간이 멈추는 곳</div>
+  <div class="footer-links">
+    <a href="privacy.html">개인정보처리방침</a>
+    <a href="terms.html">이용약관</a>
+    <a onclick="openChat()">문의하기</a>
+  </div>
   <div class="footer-info">
     주식회사 엘아이 · 대표 노종구 · 사업자번호 650-81-00293<br/>
     서울 강남구 도산대로 445 6층<br/>
@@ -659,9 +656,9 @@ for (let i = 0; i < 30; i++) {
   particlesContainer.appendChild(p);
 }
 
-// SalesMartly 채팅 열기 + Google Ads 전환 추적
+// ★★★ SalesMartly 채팅 바로 열기 (alert 없이 부드럽게)
 function openChat() {
-  // Google Ads 전환 이벤트 (상담 시작)
+  // Google Ads 전환 이벤트
   if (typeof gtag === 'function') {
     gtag('event', 'conversion', {
       'send_to': 'AW-18404026371/chat_open',
@@ -674,12 +671,30 @@ function openChat() {
     });
   }
   
+  // 방법 1: SalesMartly 공식 API (가장 확실)
+  if (window.ssq && typeof window.ssq.push === 'function') {
+    window.ssq.push('chatOpen');
+    return;
+  }
+  
+  // 방법 2: 다른 SalesMartly API
   if (window.SalesMartly && window.SalesMartly.open) {
     window.SalesMartly.open();
-  } else {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    setTimeout(() => alert('상담 채팅이 우측 하단에 준비되어 있습니다.'), 500);
+    return;
   }
+  
+  // 방법 3: 위젯 아이콘 직접 클릭
+  const widget = document.querySelector('.smartcbc-app__widget-btn, .smartcbc-cbc-btn, [class*="smartcbc"]:not(iframe)');
+  if (widget && widget.click) {
+    widget.click();
+    return;
+  }
+  
+  // 최종: 위젯 로딩 대기 후 재시도 (조용히, alert 없이)
+  setTimeout(() => {
+    if (window.ssq) window.ssq.push('chatOpen');
+    else if (window.SalesMartly && window.SalesMartly.open) window.SalesMartly.open();
+  }, 800);
 }
 </script>
 
