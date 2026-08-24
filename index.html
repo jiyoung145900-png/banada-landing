@@ -656,18 +656,14 @@ for (let i = 0; i < 30; i++) {
   particlesContainer.appendChild(p);
 }
 
-// ★★★ SalesMartly 채팅 바로 열기 (alert 없이 부드럽게)
+// ★★★ SalesMartly 채팅 바로 열기 + Google Ads 전환 추적
 function openChat() {
-  // Google Ads 전환 이벤트
+  // ★ Google Ads 전환 이벤트 (실제 발급받은 라벨 사용)
   if (typeof gtag === 'function') {
     gtag('event', 'conversion', {
-      'send_to': 'AW-18404026371/chat_open',
-      'event_category': 'engagement',
-      'event_label': 'chat_button_click'
-    });
-    gtag('event', 'chat_open', {
-      'event_category': 'CTA',
-      'event_label': 'openChat'
+      'send_to': 'AW-18404026371/6dQpCOHN4OYcEIPQ3MdE',
+      'value': 1.0,
+      'currency': 'USD'
     });
   }
   
