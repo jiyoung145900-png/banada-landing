@@ -22,6 +22,24 @@
   gtag('config', 'AW-18404026371');
 </script>
 
+<!-- Event snippet for 문의 conversion page (구글 공식 함수) -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18404026371/6dQpCOHN4OYcEIPQ3MdE',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
+
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -656,9 +674,14 @@ for (let i = 0; i < 30; i++) {
   particlesContainer.appendChild(p);
 }
 
-// ★★★ SalesMartly 채팅 바로 열기 + Google Ads 전환 추적
+// ★★★ SalesMartly 채팅 열기 + Google Ads 전환 추적 (이중 안전 장치)
 function openChat() {
-  // ★ Google Ads 전환 이벤트 (실제 발급받은 라벨 사용)
+  // ★ 1. Google 공식 함수 호출 (구글이 발급해준 함수 사용)
+  if (typeof gtag_report_conversion === 'function') {
+    gtag_report_conversion();
+  }
+  
+  // ★ 2. 백업으로 직접 gtag 이벤트도 전송
   if (typeof gtag === 'function') {
     gtag('event', 'conversion', {
       'send_to': 'AW-18404026371/6dQpCOHN4OYcEIPQ3MdE',
