@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>BANADA · 시간이 멈추는 곳</title>
-<meta name="description" content="엄선된 VIP 회원을 위한 프리미엄 나이트 라운지 서비스. 매일 정오~자정 실시간 상담, 완벽한 프라이버시 보장." />
-<meta name="keywords" content="바나다, BANADA, VIP 라운지, 프리미엄 매니저, 나이트 라운지" />
+<title>BANADA · 프라이빗 멤버십 소셜 라운지</title>
+<meta name="description" content="검증된 VIP 회원을 위한 고품격 라이프스타일 컨설팅 & 프라이빗 네트워킹. 완벽한 프라이버시와 1:1 전담 큐레이터 서비스." />
+<meta name="keywords" content="바나다, BANADA, VIP 라운지, 프라이빗 멤버십, 네트워킹 클럽, 컨시어지" />
 
 <!-- OG (카톡/텔레 공유) -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="BANADA · 시간이 멈추는 곳" />
-<meta property="og:description" content="VIP 회원만을 위한 프리미엄 나이트 라운지 · 매일 정오~자정 12시간 실시간 상담" />
+<meta property="og:description" content="성공한 당신을 위한 프라이빗 멤버십 네트워킹 · 1:1 전담 컨시어지 서비스" />
 <meta property="og:image" content="./images/logo.png" />
 
 <!-- Google tag (gtag.js) - Google Ads -->
@@ -55,6 +55,7 @@ function gtag_report_conversion(url) {
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+/* 기존 CSS 완벽 유지 */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -476,6 +477,11 @@ img { max-width: 100%; display: block; }
 .footer-info {
   font-size: 12px; color: rgba(255, 255, 255, 0.4);
   line-height: 1.8;
+  margin-top: 20px;
+}
+.footer-warning {
+  font-size: 13px; color: #D4AF37; font-weight: bold;
+  margin-bottom: 15px;
 }
 
 @media (max-width: 640px) {
@@ -496,18 +502,18 @@ img { max-width: 100%; display: block; }
     <img src="./images/logo.png" alt="BANADA" class="hero-logo" />
     <div class="hero-eyebrow">Premium · Private · VIP Members Only</div>
     <h1 class="hero-title">시간이 멈추는 <span class="accent">곳</span></h1>
-    <p class="hero-sub">Where the night begins, and time surrenders.</p>
+    <p class="hero-sub">Where premium connections begin, and time surrenders.</p>
     
     <button class="cta-primary" onclick="openChat()">
-      💬 지금 상담하기
+      💬 프라이빗 멤버십 문의
       <span class="cta-arrow">→</span>
     </button>
-    <div class="cta-hint">⚡ 실시간 응대 · 완벽한 프라이버시 보장</div>
+    <div class="cta-hint">⚡ 1:1 전담 큐레이터 매칭 · 철저한 프라이버시 보장</div>
     
     <div class="trust-badges">
       <div class="trust-item">
         <div class="trust-num">1,000+</div>
-        <div class="trust-label">VIP 회원</div>
+        <div class="trust-label">VIP 멤버</div>
       </div>
       <div class="trust-divider"></div>
       <div class="trust-item">
@@ -528,70 +534,70 @@ img { max-width: 100%; display: block; }
 <section class="section">
   <div class="section-header">
     <div class="eyebrow">THE EXPERIENCE</div>
-    <h2 class="section-title">보이지 않는 곳에서<br/>가장 <span class="italic">특별한 밤</span>을</h2>
-    <p class="section-desc">엄선된 VIP 회원만이 아는 프리미엄 프라이빗 라운지</p>
+    <h2 class="section-title">보이지 않는 곳에서<br/>가장 <span class="italic">특별한 인연</span>을</h2>
+    <p class="section-desc">소수의 VIP 멤버만이 향유하는 하이엔드 라이프스타일 커뮤니티</p>
   </div>
   
   <div class="concept-grid">
     <div class="concept-card">
       <div class="concept-number">— 01 · Private</div>
-      <h3 class="concept-title">완전한 익명</h3>
-      <p class="concept-text">회원 정보는 암호화되어 저장되며, 절대 외부에 공개되지 않습니다. 텔레그램 익명 상담으로 완벽한 프라이버시.</p>
+      <h3 class="concept-title">철저한 보안</h3>
+      <p class="concept-text">가입 시 입력된 모든 정보는 암호화되며, 1:1 전담 컨시어지를 통해 누구에게도 공개되지 않는 완벽한 프라이빗 네트워킹을 보장합니다.</p>
     </div>
     <div class="concept-card">
       <div class="concept-number">— 02 · Premium</div>
-      <h3 class="concept-title">검증된 매니저</h3>
-      <p class="concept-text">수도권 톱클래스 매니저만 엄격한 심사를 거쳐 안내해드립니다. 매너, 스타일, 서비스 모두 최상급.</p>
+      <h3 class="concept-title">검증된 네트워크</h3>
+      <p class="concept-text">엄격한 자체 심사를 통과한 매력적이고 품격 있는 멤버들만 안내해 드립니다. 성공한 분들의 수준에 맞는 최상급 인연을 만나보세요.</p>
     </div>
     <div class="concept-card">
-      <div class="concept-number">— 03 · Nocturnal</div>
-      <h3 class="concept-title">밤의 시간</h3>
-      <p class="concept-text">매일 정오부터 자정까지, 실시간 상담과 예약. 원하는 시간에 특별한 밤을 시작할 수 있습니다.</p>
+      <div class="concept-number">— 03 · Exclusive</div>
+      <h3 class="concept-title">익스클루시브 라운지</h3>
+      <p class="concept-text">매일 정오부터 자정까지 운영되는 프라이빗 라운지 시스템. 원하시는 시간과 장소에서 특별한 소셜 라이프를 즐기실 수 있습니다.</p>
     </div>
   </div>
 </section>
 
 <section class="section alt">
   <div class="section-header">
-    <div class="eyebrow">PREMIUM MANAGERS</div>
-    <h2 class="section-title">검증된 <span class="gold">프리미엄 매니저</span></h2>
-    <p class="section-desc">회원가입 후 전체 매니저 프로필 열람 및 예약이 가능합니다</p>
+    <div class="eyebrow">PREMIUM CURATORS</div>
+    <h2 class="section-title">검증된 <span class="gold">프라이빗 큐레이터</span></h2>
+    <p class="section-desc">멤버십 가입 후 프라이빗 멤버 라운지 전체 프로필 열람이 가능합니다</p>
   </div>
   
   <div class="manager-grid">
-    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-1.jpg" alt="Manager 1" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Manager 1</div><div class="manager-region">· · ·</div></div></div>
-    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-2.jpg" alt="Manager 2" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Manager 2</div><div class="manager-region">· · ·</div></div></div>
-    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-3.jpg" alt="Manager 3" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Manager 3</div><div class="manager-region">· · ·</div></div></div>
-    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-4.jpg" alt="Manager 4" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Manager 4</div><div class="manager-region">· · ·</div></div></div>
-    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-5.jpg" alt="Manager 5" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Manager 5</div><div class="manager-region">· · ·</div></div></div>
-    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-6.jpg" alt="Manager 6" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Manager 6</div><div class="manager-region">· · ·</div></div></div>
-    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-7.jpg" alt="Manager 7" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Manager 7</div><div class="manager-region">· · ·</div></div></div>
-    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-8.jpg" alt="Manager 8" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Manager 8</div><div class="manager-region">· · ·</div></div></div>
+    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-1.jpg" alt="Curator 1" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Curator 1</div><div class="manager-region">· · ·</div></div></div>
+    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-2.jpg" alt="Curator 2" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Curator 2</div><div class="manager-region">· · ·</div></div></div>
+    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-3.jpg" alt="Curator 3" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Curator 3</div><div class="manager-region">· · ·</div></div></div>
+    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-4.jpg" alt="Curator 4" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Curator 4</div><div class="manager-region">· · ·</div></div></div>
+    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-5.jpg" alt="Curator 5" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Curator 5</div><div class="manager-region">· · ·</div></div></div>
+    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-6.jpg" alt="Curator 6" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Curator 6</div><div class="manager-region">· · ·</div></div></div>
+    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-7.jpg" alt="Curator 7" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Curator 7</div><div class="manager-region">· · ·</div></div></div>
+    <div class="manager-card"><div class="manager-img-wrap"><img src="./images/managers/manager-8.jpg" alt="Curator 8" class="manager-img" loading="lazy"/><div class="manager-overlay"><div class="manager-badge">PREMIUM</div></div><div class="blur-overlay"><div class="blur-icon">🔒</div><div class="blur-label">VIP 전용</div></div></div><div class="manager-info"><div class="manager-name">Curator 8</div><div class="manager-region">· · ·</div></div></div>
   </div>
   
   <div style="text-align: center; margin-top: 40px;">
-    <button class="cta-secondary" onclick="openChat()">전체 매니저 보기 →</button>
+    <button class="cta-secondary" onclick="openChat()">프라이빗 멤버십 라운지 입장 →</button>
   </div>
 </section>
 
 <section class="section">
   <div class="section-header">
     <div class="eyebrow">NATIONWIDE</div>
-    <h2 class="section-title">전국 <span class="gold">어디든</span> 서비스</h2>
-    <p class="section-desc">주요 도시부터 지방까지, 전 지역 매니저 상담 가능</p>
+    <h2 class="section-title">전국 <span class="gold">어디든</span> 멤버십 라운지</h2>
+    <p class="section-desc">주요 도시부터 지방까지, 전 지역 전담 큐레이터 매칭</p>
   </div>
   <div class="region-grid">
-    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">강남</div><div class="region-count">45+ 매니저</div></div>
-    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">홍대</div><div class="region-count">32+ 매니저</div></div>
-    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">분당</div><div class="region-count">28+ 매니저</div></div>
-    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">수원</div><div class="region-count">35+ 매니저</div></div>
-    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">평택</div><div class="region-count">22+ 매니저</div></div>
-    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">부산</div><div class="region-count">40+ 매니저</div></div>
-    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">대구</div><div class="region-count">25+ 매니저</div></div>
-    <div class="region-card"><div class="region-icon">🌏</div><div class="region-name">기타 지역</div><div class="region-count">전국 상담</div></div>
+    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">강남</div><div class="region-count">45+ 큐레이터</div></div>
+    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">홍대</div><div class="region-count">32+ 큐레이터</div></div>
+    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">분당</div><div class="region-count">28+ 큐레이터</div></div>
+    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">수원</div><div class="region-count">35+ 큐레이터</div></div>
+    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">평택</div><div class="region-count">22+ 큐레이터</div></div>
+    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">부산</div><div class="region-count">40+ 큐레이터</div></div>
+    <div class="region-card"><div class="region-icon">📍</div><div class="region-name">대구</div><div class="region-count">25+ 큐레이터</div></div>
+    <div class="region-card"><div class="region-icon">🌏</div><div class="region-name">기타 지역</div><div class="region-count">전국 제휴망</div></div>
   </div>
   <div style="text-align: center; margin-top: 30px;">
-    <p style="font-size: 14px; color: rgba(255,255,255,0.5);">💫 위 지역 외에도 <strong style="color:#D4AF37;">전국 어디든</strong> 상담 가능합니다</p>
+    <p style="font-size: 14px; color: rgba(255,255,255,0.5);">💫 위 지역 외에도 <strong style="color:#D4AF37;">전국 어디든</strong> 멤버십 이용이 가능합니다</p>
   </div>
 </section>
 
@@ -603,7 +609,7 @@ img { max-width: 100%; display: block; }
   <div class="testimonials-grid">
     <div class="testimonial-card">
       <div class="rating">⭐⭐⭐⭐⭐</div>
-      <p class="testimonial-text">"믿을만한 곳 찾기 진짜 힘든데, 여기는 처음부터 끝까지 프로페셔널합니다. 실장님도 친절하시고 매니저 퀄리티도 최상급이에요."</p>
+      <p class="testimonial-text">"수준에 맞는 프라이빗 모임을 찾기 힘들었는데, 확실히 프로페셔널한 컨설팅을 제공합니다. 큐레이터 분들도 매너가 훌륭합니다."</p>
       <div class="testimonial-author">
         <div class="tier-badge">DIAMOND</div>
         <div class="testimonial-days">가입 6개월</div>
@@ -611,7 +617,7 @@ img { max-width: 100%; display: block; }
     </div>
     <div class="testimonial-card">
       <div class="rating">⭐⭐⭐⭐⭐</div>
-      <p class="testimonial-text">"다른 곳도 여러 군데 이용해봤는데 BANADA가 확실히 다릅니다. 프라이버시 관리도 철저하고 응대도 빨라서 계속 이용하고 있어요."</p>
+      <p class="testimonial-text">"보안이 철저해서 마음 편하게 이용 중입니다. 멤버십 관리부터 피드백 응대까지 전담 매니저의 서비스 퀄리티가 최상급입니다."</p>
       <div class="testimonial-author">
         <div class="tier-badge">GOLD</div>
         <div class="testimonial-days">가입 3개월</div>
@@ -619,7 +625,7 @@ img { max-width: 100%; display: block; }
     </div>
     <div class="testimonial-card">
       <div class="rating">⭐⭐⭐⭐⭐</div>
-      <p class="testimonial-text">"지역마다 매니저가 있어서 편해요. 다들 프로페셔널하고 매너 좋으십니다. 강력 추천!"</p>
+      <p class="testimonial-text">"출장이 잦은 편인데 지역마다 제휴 네트워크가 훌륭하게 구성되어 있어 매우 만족스럽습니다. 강력 추천합니다."</p>
       <div class="testimonial-author">
         <div class="tier-badge">PLATINUM</div>
         <div class="testimonial-days">가입 1년</div>
@@ -634,24 +640,24 @@ img { max-width: 100%; display: block; }
     <h2 class="section-title">자주 묻는 <span class="gold">질문</span></h2>
   </div>
   <div class="faq-list">
-    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>가입 조건이 어떻게 되나요?</span><span class="faq-plus">+</span></div><div class="faq-a">만 19세 이상 성인 남성이면 누구나 가입 신청 가능합니다. 승인 심사 후 24시간 내 이용 가능합니다.</div></div>
-    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>프라이버시는 어떻게 보호되나요?</span><span class="faq-plus">+</span></div><div class="faq-a">회원 정보는 암호화 저장되며 절대 외부에 유출되지 않습니다. 텔레그램 익명 상담도 제공합니다.</div></div>
-    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>어떤 지역에서 이용 가능한가요?</span><span class="faq-plus">+</span></div><div class="faq-a">서울, 경기, 강원, 전라, 충청, 부산, 대구, 대전 등 전국 주요 도시에서 이용 가능합니다.</div></div>
-    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>이용료는 어떻게 되나요?</span><span class="faq-plus">+</span></div><div class="faq-a">가입 시 등급별 이용료가 안내되며, 매니저별 시간당 요금은 상담 시 자세히 안내드립니다.</div></div>
-    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>결제는 어떻게 하나요?</span><span class="faq-plus">+</span></div><div class="faq-a">계좌이체, 현금 등 다양한 방법을 지원합니다. 자세한 사항은 상담 문의 부탁드립니다.</div></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>멤버십 가입 조건이 어떻게 되나요?</span><span class="faq-plus">+</span></div><div class="faq-a">만 19세 이상 성인 남성이면 누구나 프라이빗 멤버십 가입 신청이 가능합니다. 1:1 상담 후 즉시 이용 가능합니다.</div></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>프라이버시는 어떻게 보호되나요?</span><span class="faq-plus">+</span></div><div class="faq-a">고객님의 개인정보는 최고 수준의 보안으로 암호화 처리되며, 모든 컨설팅은 1:1 전담 시크릿 채널로 진행됩니다.</div></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>어떤 지역에서 이용 가능한가요?</span><span class="faq-plus">+</span></div><div class="faq-a">서울, 경기, 강원, 전라, 충청, 부산, 대구 등 전국 주요 도시에 프라이빗 제휴 네트워크가 구축되어 있습니다.</div></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>멤버십 컨설팅 비용은 어떻게 되나요?</span><span class="faq-plus">+</span></div><div class="faq-a">선택하시는 멤버십 등급에 따라 다양한 맞춤형 혜택이 제공되며, 자세한 요금은 전담 큐레이터가 상세히 안내해 드립니다.</div></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span>결제는 어떻게 하나요?</span><span class="faq-plus">+</span></div><div class="faq-a">회원님들의 편의를 위해 다양한 결제 방식을 안전하게 지원합니다. 자세한 사항은 1:1 문의를 부탁드립니다.</div></div>
   </div>
 </section>
 
 <section class="final-cta">
   <div class="final-content">
     <div class="final-eyebrow">✦ NOW OPEN ✦</div>
-    <h2 class="final-title">지금 <span class="gold">BANADA</span>와<br/>특별한 밤을 시작하세요</h2>
-    <p class="final-desc">매일 정오부터 자정까지 실시간 상담으로 궁금한 점을 바로 해결해드립니다</p>
+    <h2 class="final-title">지금 <span class="gold">BANADA</span>와<br/>특별한 라이프를 시작하세요</h2>
+    <p class="final-desc">매일 정오부터 자정까지 프라이빗 컨시어지가 즉각적으로 답변해 드립니다</p>
     <button class="final-cta-btn" onclick="openChat()">
-      💬 지금 상담하기
+      💬 프라이빗 멤버십 문의
       <span class="cta-arrow">→</span>
     </button>
-    <div class="final-hint">⚡ 응답 평균 3분 · 완벽한 프라이버시</div>
+    <div class="final-hint">⚡ 1:1 전담 상담 배정 · 완벽한 프라이버시 유지</div>
   </div>
 </section>
 
@@ -664,9 +670,12 @@ img { max-width: 100%; display: block; }
     <a onclick="openChat()">문의하기</a>
   </div>
   <div class="footer-info">
-    주식회사 엘아이 · 대표 노종구 · 사업자번호 650-81-00293<br/>
-    서울 강남구 도산대로 445 6층<br/>
-    © 2021 BANADA. All rights reserved.
+    <p class="footer-warning">[안내] 본 서비스는 만 19세 이상만 이용 가능한 프라이빗 멤버십 커뮤니티입니다.</p>
+    상호명: 주식회사 엘아이 | 대표자: 노종구 | 사업자등록번호: 650-81-00293<br/>
+    주소: 서울시 강남구 도산대로 445, 6층 (청담동)<br/>
+    이메일: official@banadameet.com | 업태/종목: 컨설팅 / 컨설팅업<br/>
+    <br/>
+    Copyright © 2021 BANADA. All rights reserved.
   </div>
 </footer>
 
