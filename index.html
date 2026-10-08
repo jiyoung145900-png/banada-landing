@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
 
 <!-- ============================================ -->
-<!-- ✅ Meta Pixel - head 최상단 (발화 성공률 극대화) -->
+<!-- ✅ Meta Pixel - head 최상단 -->
+<!-- ✅ event_id로 CAPI 중복 제거 활성화 -->
 <!-- ============================================ -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -15,9 +16,53 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
+
 fbq('init', '1073540018723521');
-fbq('track', 'PageView');
-fbq('track', 'ViewContent', { content_name: 'Landing Page', content_category: 'landing' });
+
+// ★ event_id로 Pixel + CAPI 중복 제거
+// 같은 event_id를 Pixel과 CAPI 양쪽에 전송하면 Meta가 자동 중복 제거
+window.__banadaEventIds = {};
+function makeEventId(name) {
+  const id = name + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+  window.__banadaEventIds[name] = id;
+  return id;
+}
+
+// PageView - Pixel + CAPI 양쪽 전송
+const pvEventId = makeEventId('PageView');
+fbq('track', 'PageView', {}, { eventID: pvEventId });
+
+// ViewContent - 랜딩 조회 품질 지표
+const vcEventId = makeEventId('ViewContent');
+fbq('track', 'ViewContent',
+  { content_name: 'Landing Page', content_category: 'landing' },
+  { eventID: vcEventId }
+);
+
+// CAPI로도 동일 이벤트 전송 (서버에서)
+function sendToCAPI(eventName, eventId, customData) {
+  const fbp = document.cookie.match(/_fbp=([^;]+)/)?.[1];
+  const fbc = document.cookie.match(/_fbc=([^;]+)/)?.[1];
+  fetch('/api/capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event_name: eventName,
+      event_id: eventId,
+      event_source_url: window.location.href,
+      fbp, fbc,
+      custom_data: customData || {},
+    }),
+    keepalive: true, // 페이지 이동 시에도 전송 보장
+  }).catch(() => {});
+}
+
+// PageView, ViewContent를 CAPI에도 전송
+// (쿠키 설정 지연 대응 - 500ms 지연 후 전송)
+setTimeout(() => {
+  sendToCAPI('PageView', pvEventId);
+  sendToCAPI('ViewContent', vcEventId, { content_name: 'Landing Page' });
+}, 500);
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1073540018723521&ev=PageView&noscript=1"
@@ -38,7 +83,7 @@ src="https://www.facebook.com/tr?id=1073540018723521&ev=PageView&noscript=1"
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-<!-- ✅ 테마 색상 (모바일 브라우저 상단바) -->
+<!-- ✅ 테마 색상 -->
 <meta name="theme-color" content="#1f0817" />
 
 <!-- ✅ iOS 웹앱 설정 -->
@@ -46,7 +91,7 @@ src="https://www.facebook.com/tr?id=1073540018723521&ev=PageView&noscript=1"
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="BANADA" />
 
-<!-- ✅ Open Graph (카톡/텔레그램/페북 공유) -->
+<!-- ✅ Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="BANADA" />
 <meta property="og:title" content="BANADA · 프리미엄 매칭 메이킹" />
@@ -70,7 +115,7 @@ src="https://www.facebook.com/tr?id=1073540018723521&ev=PageView&noscript=1"
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ====== 🎨 Color System - 다크 와인/로즈골드/핑크 하트 ====== */
+/* ====== 🎨 Color System ====== */
 :root{
   --bg-deep:#120410;
   --bg:#1f0817;
@@ -91,24 +136,16 @@ src="https://www.facebook.com/tr?id=1073540018723521&ev=PageView&noscript=1"
 
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Noto Sans KR',-apple-system,sans-serif;
-  overflow-x:hidden;
-  min-height:100vh;
-}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',-apple-system,sans-serif;overflow-x:hidden;min-height:100vh}
 img{max-width:100%;display:block}
 
-/* ====== Keyframes ====== */
 @keyframes logoPulse{
   0%,100%{filter:drop-shadow(0 0 50px var(--heart-glow)) drop-shadow(0 0 30px var(--rose-gold-glow))}
   50%{filter:drop-shadow(0 0 70px var(--heart-glow)) drop-shadow(0 0 50px var(--rose-gold-glow))}
 }
 @keyframes petalFall{
   0%{transform:translateY(-10vh) translateX(0) rotate(0deg);opacity:0}
-  10%{opacity:.7}
-  90%{opacity:.7}
+  10%{opacity:.7} 90%{opacity:.7}
   100%{transform:translateY(110vh) translateX(100px) rotate(360deg);opacity:0}
 }
 @keyframes heartFloat{
@@ -119,33 +156,19 @@ img{max-width:100%;display:block}
   0%,100%{transform:translateY(0);opacity:.5}
   50%{transform:translateY(10px);opacity:1}
 }
-@keyframes fadeInUp{
-  from{opacity:0;transform:translateY(30px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes shimmer{
-  0%{background-position:-200% 0}
-  100%{background-position:200% 0}
-}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0} 100%{background-position:200% 0}}
 @keyframes glow{
   0%,100%{box-shadow:0 10px 40px var(--heart-glow),0 0 20px var(--rose-gold-glow)}
   50%{box-shadow:0 15px 60px var(--heart-glow),0 0 30px var(--rose-gold-glow)}
 }
 
-/* ====== 🌸 Hero ====== */
+/* Hero */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:
-  radial-gradient(ellipse at top,#4e1835 0%,#2a0d1f 40%,#120410 100%)}
-.hero-overlay{position:absolute;inset:0;background:
-  radial-gradient(circle at 25% 35%,rgba(230,57,117,.1) 0%,transparent 50%),
-  radial-gradient(circle at 75% 65%,rgba(212,165,116,.08) 0%,transparent 50%)}
-
-/* 벚꽃 꽃잎 */
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at top,#4e1835 0%,#2a0d1f 40%,#120410 100%)}
+.hero-overlay{position:absolute;inset:0;background:radial-gradient(circle at 25% 35%,rgba(230,57,117,.1) 0%,transparent 50%),radial-gradient(circle at 75% 65%,rgba(212,165,116,.08) 0%,transparent 50%)}
 .petal{position:absolute;font-size:16px;color:var(--pink-soft);text-shadow:0 0 6px rgba(255,194,215,.5);animation:petalFall linear infinite;top:-20px;pointer-events:none;opacity:.7}
-
-/* 하트 플로팅 */
 .heart-float{position:absolute;color:var(--heart);opacity:.3;animation:heartFloat 5s ease-in-out infinite;filter:drop-shadow(0 0 8px var(--heart-glow));font-size:18px}
-
 .hero-content{position:relative;z-index:2;max-width:860px;text-align:center;animation:fadeInUp 1s ease-out}
 .hero-logo{width:200px;height:200px;object-fit:contain;margin:0 auto 28px;filter:drop-shadow(0 0 50px var(--heart-glow)) drop-shadow(0 0 30px var(--rose-gold-glow));animation:logoPulse 4s ease-in-out infinite}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:9px 24px;background:linear-gradient(135deg,rgba(230,57,117,.1),rgba(212,165,116,.1));border:1px solid rgba(212,165,116,.4);border-radius:50px;font-size:11px;letter-spacing:4px;color:var(--rose-gold-light);font-weight:600;margin-bottom:32px;text-transform:uppercase}
@@ -153,15 +176,12 @@ img{max-width:100%;display:block}
 .hero-title{font-size:clamp(44px,7.5vw,82px);font-weight:300;line-height:1.08;margin-bottom:20px;font-family:'Playfair Display','Noto Serif KR',serif;letter-spacing:-1px;color:#fff}
 .hero-title .accent{background:linear-gradient(135deg,var(--rose-gold-light) 0%,var(--pink) 40%,var(--rose-gold-light) 60%,var(--heart) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700;font-style:italic;animation:shimmer 4s ease-in-out infinite}
 .hero-sub{font-size:clamp(14px,2vw,18px);color:rgba(255,194,215,.7);font-style:italic;margin-bottom:44px;font-family:'Cormorant Garamond',serif;letter-spacing:1.5px}
-
-/* CTA 메인 버튼 */
 .cta-primary{display:inline-flex;align-items:center;gap:12px;padding:20px 54px;background:linear-gradient(135deg,var(--heart) 0%,var(--pink) 50%,var(--heart) 100%);background-size:200% auto;color:#fff;border:none;border-radius:50px;font-size:17px;font-weight:800;cursor:pointer;letter-spacing:.5px;transition:all .3s cubic-bezier(.19,1,.22,1);box-shadow:0 10px 40px var(--heart-glow),0 0 20px var(--rose-gold-glow);animation:glow 3s ease-in-out infinite;font-family:'Noto Sans KR',sans-serif;text-decoration:none}
 .cta-primary:hover{transform:translateY(-3px) scale(1.02);background-position:right center}
 .cta-heart{font-size:18px}
 .cta-arrow{font-size:22px;transition:transform .3s}
 .cta-primary:hover .cta-arrow{transform:translateX(6px)}
 .cta-hint{margin-top:16px;font-size:13px;color:var(--text-dim);letter-spacing:.5px;margin-bottom:56px}
-
 .trust-badges{display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;padding:30px 0;border-top:1px solid rgba(212,165,116,.2)}
 .trust-item{text-align:center}
 .trust-num{font-size:30px;font-weight:800;background:linear-gradient(135deg,var(--rose-gold-light),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Playfair Display',serif;margin-bottom:4px}
@@ -169,7 +189,7 @@ img{max-width:100%;display:block}
 .trust-divider{width:1px;height:36px;background:rgba(212,165,116,.3)}
 .scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:5px;color:rgba(212,165,116,.6);font-weight:600;animation:scrollBounce 2s ease-in-out infinite;text-transform:uppercase}
 
-/* ====== Sections ====== */
+/* Sections */
 .section{padding:100px 20px;position:relative}
 .section.wine{background:linear-gradient(180deg,var(--bg) 0%,var(--wine) 100%)}
 .section.deep{background:var(--bg-deep)}
@@ -182,7 +202,7 @@ img{max-width:100%;display:block}
 .section-title .italic{font-style:italic;font-weight:500;background:linear-gradient(135deg,var(--rose-gold-light),var(--heart));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .section-desc{font-size:15px;color:var(--text-muted);line-height:1.7;font-weight:300}
 
-/* ====== 💎 Feature Cards ====== */
+/* Feature Cards */
 .concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;max-width:1100px;margin:0 auto}
 .concept-card{padding:40px 36px;background:linear-gradient(160deg,rgba(255,107,157,.04),rgba(212,165,116,.04),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.2);border-radius:20px;transition:all .4s;position:relative;overflow:hidden}
 .concept-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,107,157,.08),transparent);transition:left .6s}
@@ -192,7 +212,7 @@ img{max-width:100%;display:block}
 .concept-title{font-size:22px;font-weight:700;margin-bottom:14px;font-family:'Playfair Display','Noto Serif KR',serif;color:#fff}
 .concept-text{font-size:14px;color:var(--text-muted);line-height:1.75}
 
-/* ====== 🌹 Atmosphere Cards ====== */
+/* Atmosphere Cards */
 .atmo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:1100px;margin:0 auto}
 .atmo-card{position:relative;padding:48px 28px 36px;background:linear-gradient(180deg,rgba(230,57,117,.08) 0%,rgba(74,24,48,.4) 100%);border:1px solid rgba(255,107,157,.2);border-radius:20px;overflow:hidden;transition:all .35s;text-align:center}
 .atmo-card:hover{transform:translateY(-6px);border-color:var(--pink);box-shadow:0 20px 50px rgba(230,57,117,.25)}
@@ -201,11 +221,10 @@ img{max-width:100%;display:block}
 .atmo-emoji{font-size:48px;display:block;margin-bottom:16px;filter:drop-shadow(0 0 12px var(--heart-glow))}
 .atmo-title{font-size:18px;font-weight:700;color:var(--rose-gold-light);margin-bottom:10px;font-family:'Playfair Display',serif;letter-spacing:.5px}
 .atmo-desc{font-size:13px;color:var(--text-muted);line-height:1.65}
-
 .cta-secondary{display:inline-flex;align-items:center;gap:10px;padding:14px 34px;background:transparent;color:var(--rose-gold-light);border:1.5px solid var(--rose-gold);border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;font-family:'Noto Sans KR',sans-serif;letter-spacing:.5px}
 .cta-secondary:hover{background:linear-gradient(135deg,var(--heart),var(--pink));border-color:transparent;color:#fff;transform:translateY(-2px);box-shadow:0 10px 30px var(--heart-glow)}
 
-/* ====== 💝 Steps ====== */
+/* Steps */
 .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1100px;margin:0 auto}
 .step-card{padding:40px 32px;text-align:center;background:linear-gradient(160deg,rgba(212,165,116,.06),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.2);border-radius:20px;position:relative;transition:all .35s}
 .step-card:hover{border-color:var(--pink);transform:translateY(-4px)}
@@ -213,7 +232,7 @@ img{max-width:100%;display:block}
 .step-title{font-size:20px;font-weight:700;margin-bottom:12px;font-family:'Playfair Display','Noto Serif KR',serif;color:#fff}
 .step-text{font-size:14px;color:var(--text-muted);line-height:1.7}
 
-/* ====== 📍 Regions ====== */
+/* Regions */
 .region-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:900px;margin:0 auto}
 .region-card{padding:22px 14px;text-align:center;background:linear-gradient(160deg,rgba(255,107,157,.04),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.18);border-radius:14px;transition:all .3s}
 .region-card:hover{border-color:var(--pink);background:linear-gradient(160deg,rgba(255,107,157,.1),rgba(0,0,0,.3));transform:translateY(-3px)}
@@ -221,7 +240,7 @@ img{max-width:100%;display:block}
 .region-name{font-size:14px;font-weight:700;color:var(--rose-gold-light);margin-bottom:4px;font-family:'Noto Sans KR',sans-serif}
 .region-count{font-size:10px;color:var(--text-dim)}
 
-/* ====== 💕 Testimonials ====== */
+/* Testimonials */
 .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1100px;margin:0 auto}
 .testimonial-card{padding:32px 28px;background:linear-gradient(160deg,rgba(212,165,116,.05),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.2);border-radius:20px;transition:all .35s;position:relative}
 .testimonial-card::before{content:'❝';position:absolute;top:16px;right:20px;font-size:50px;color:rgba(212,165,116,.15);line-height:1;font-family:serif}
@@ -232,7 +251,7 @@ img{max-width:100%;display:block}
 .tier-badge{padding:4px 12px;background:linear-gradient(135deg,var(--heart),var(--pink));color:#fff;font-size:10px;font-weight:800;letter-spacing:1.5px;border-radius:50px}
 .author-info{font-size:12px;color:var(--text-dim)}
 
-/* ====== 💬 FAQ ====== */
+/* FAQ */
 .faq-list{max-width:800px;margin:0 auto}
 .faq-item{margin-bottom:14px;background:linear-gradient(160deg,rgba(212,165,116,.04),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.15);border-radius:14px;overflow:hidden;transition:border-color .3s}
 .faq-item:hover{border-color:rgba(255,107,157,.4)}
@@ -243,7 +262,7 @@ img{max-width:100%;display:block}
 .faq-item[open] summary{color:var(--pink)}
 .faq-answer{padding:0 26px 24px;font-size:14px;color:var(--text-muted);line-height:1.75}
 
-/* ====== 🎁 Final CTA ====== */
+/* Final CTA */
 .final-cta{text-align:center;padding:120px 20px;background:radial-gradient(ellipse at center,rgba(230,57,117,.15) 0%,var(--bg-deep) 60%);position:relative;overflow:hidden}
 .final-content{position:relative;z-index:2;max-width:720px;margin:0 auto}
 .final-eyebrow{display:inline-block;padding:6px 20px;background:linear-gradient(135deg,rgba(230,57,117,.15),rgba(212,165,116,.15));border:1px solid var(--rose-gold);border-radius:50px;color:var(--rose-gold-light);font-size:11px;font-weight:700;letter-spacing:4px;margin-bottom:20px}
@@ -253,7 +272,7 @@ img{max-width:100%;display:block}
 .final-cta-btn:hover{transform:translateY(-3px) scale(1.02);background-position:right center}
 .final-hint{margin-top:16px;font-size:12px;color:var(--text-dim);letter-spacing:1px}
 
-/* ====== Footer ====== */
+/* Footer */
 .footer{background:var(--bg-deep);padding:60px 20px 40px;text-align:center;border-top:1px solid rgba(212,165,116,.15)}
 .footer-logo{font-size:28px;font-family:'Playfair Display',serif;background:linear-gradient(135deg,var(--rose-gold-light),var(--pink),var(--rose-gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800;letter-spacing:2px;margin-bottom:10px}
 .footer-slogan{font-size:12px;color:var(--rose-gold-light);font-style:italic;letter-spacing:2px;margin-bottom:24px;font-family:'Cormorant Garamond',serif}
@@ -263,7 +282,7 @@ img{max-width:100%;display:block}
 .footer-info{font-size:11px;color:var(--text-dim);line-height:1.9;margin-top:20px}
 .footer-warning{font-size:12px;color:var(--rose-gold);font-weight:600;margin-bottom:12px}
 
-/* ====== 📱 Responsive ====== */
+/* Responsive */
 @media(max-width:640px){
   .hero-logo{width:150px;height:150px}
   .trust-badges{gap:20px}
@@ -287,51 +306,33 @@ img{max-width:100%;display:block}
   <div class="hero-overlay"></div>
   <div id="petals"></div>
   <div id="hearts"></div>
-
   <div class="hero-content">
     <img src="./images/logo.png" alt="BANADA" class="hero-logo" />
-
     <div class="hero-eyebrow">PREMIUM MATCH MAKING</div>
-
     <h1 class="hero-title">당신을 위한<br/><span class="accent">특별한 만남</span></h1>
     <p class="hero-sub">Where destiny meets, and every heart finds its match.</p>
-
     <button class="cta-primary" onclick="openChat()">
-      <span class="cta-heart">💕</span>
-      멤버십 상담
-      <span class="cta-arrow">→</span>
+      <span class="cta-heart">💕</span> 멤버십 상담 <span class="cta-arrow">→</span>
     </button>
     <div class="cta-hint">1:1 전담 큐레이터 배정 · 완벽한 프라이버시</div>
-
     <div class="trust-badges">
-      <div class="trust-item">
-        <div class="trust-num">1:1</div>
-        <div class="trust-label">전담 큐레이터</div>
-      </div>
+      <div class="trust-item"><div class="trust-num">1:1</div><div class="trust-label">전담 큐레이터</div></div>
       <div class="trust-divider"></div>
-      <div class="trust-item">
-        <div class="trust-num">12H</div>
-        <div class="trust-label">NOON — MIDNIGHT</div>
-      </div>
+      <div class="trust-item"><div class="trust-num">12H</div><div class="trust-label">NOON — MIDNIGHT</div></div>
       <div class="trust-divider"></div>
-      <div class="trust-item">
-        <div class="trust-num">100%</div>
-        <div class="trust-label">프라이빗</div>
-      </div>
+      <div class="trust-item"><div class="trust-num">100%</div><div class="trust-label">프라이빗</div></div>
     </div>
   </div>
-
   <div class="scroll-hint">Scroll</div>
 </section>
 
-<!-- ═══════════ 💎 FEATURES (매칭 특징) ═══════════ -->
+<!-- ═══════════ 💎 FEATURES ═══════════ -->
 <section class="section wine">
   <div class="section-header">
     <div class="eyebrow">THE EXPERIENCE</div>
     <h2 class="section-title">격이 다른 <span class="italic">프리미엄 매칭</span></h2>
     <p class="section-desc">선별된 멤버만 누리는 특별한 인연, 바나다가 설계합니다</p>
   </div>
-
   <div class="concept-grid">
     <div class="concept-card">
       <span class="concept-icon">💝</span>
@@ -358,46 +359,14 @@ img{max-width:100%;display:block}
     <h2 class="section-title"><span class="gold">BANADA</span>만의 공간</h2>
     <p class="section-desc">멤버십 가입 후 전담 큐레이터가 당신만의 특별한 순간을 설계합니다</p>
   </div>
-
   <div class="atmo-grid">
-    <div class="atmo-card">
-      <div class="atmo-badge">PREMIUM</div>
-      <div class="atmo-inner">
-        <span class="atmo-emoji">🌸</span>
-        <div class="atmo-title">Private Room</div>
-        <div class="atmo-desc">완벽한 프라이버시가<br/>보장되는 비밀의 공간</div>
-      </div>
-    </div>
-    <div class="atmo-card">
-      <div class="atmo-badge">EXCLUSIVE</div>
-      <div class="atmo-inner">
-        <span class="atmo-emoji">💎</span>
-        <div class="atmo-title">Curated Match</div>
-        <div class="atmo-desc">큐레이터가 엄선한<br/>품격 있는 인연</div>
-      </div>
-    </div>
-    <div class="atmo-card">
-      <div class="atmo-badge">VIP</div>
-      <div class="atmo-inner">
-        <span class="atmo-emoji">💝</span>
-        <div class="atmo-title">Trusted Network</div>
-        <div class="atmo-desc">검증된 멤버와 함께하는<br/>특별한 네트워크</div>
-      </div>
-    </div>
-    <div class="atmo-card">
-      <div class="atmo-badge">MEMBERS ONLY</div>
-      <div class="atmo-inner">
-        <span class="atmo-emoji">🗝️</span>
-        <div class="atmo-title">Concierge Service</div>
-        <div class="atmo-desc">1:1 전담 큐레이터의<br/>맞춤형 컨시어지</div>
-      </div>
-    </div>
+    <div class="atmo-card"><div class="atmo-badge">PREMIUM</div><div class="atmo-inner"><span class="atmo-emoji">🌸</span><div class="atmo-title">Private Room</div><div class="atmo-desc">완벽한 프라이버시가<br/>보장되는 비밀의 공간</div></div></div>
+    <div class="atmo-card"><div class="atmo-badge">EXCLUSIVE</div><div class="atmo-inner"><span class="atmo-emoji">💎</span><div class="atmo-title">Curated Match</div><div class="atmo-desc">큐레이터가 엄선한<br/>품격 있는 인연</div></div></div>
+    <div class="atmo-card"><div class="atmo-badge">VIP</div><div class="atmo-inner"><span class="atmo-emoji">💝</span><div class="atmo-title">Trusted Network</div><div class="atmo-desc">검증된 멤버와 함께하는<br/>특별한 네트워크</div></div></div>
+    <div class="atmo-card"><div class="atmo-badge">MEMBERS ONLY</div><div class="atmo-inner"><span class="atmo-emoji">🗝️</span><div class="atmo-title">Concierge Service</div><div class="atmo-desc">1:1 전담 큐레이터의<br/>맞춤형 컨시어지</div></div></div>
   </div>
-
   <div style="text-align:center;margin-top:48px">
-    <button class="cta-secondary" onclick="openChat()">
-      <span>💌</span> 프라이빗 상담 신청하기 →
-    </button>
+    <button class="cta-secondary" onclick="openChat()"><span>💌</span> 프라이빗 상담 신청하기 →</button>
   </div>
 </section>
 
@@ -408,23 +377,10 @@ img{max-width:100%;display:block}
     <h2 class="section-title">간편한 <span class="gold">3단계</span></h2>
     <p class="section-desc">복잡한 절차 없이, 지금 바로 특별한 만남을 시작하세요</p>
   </div>
-
   <div class="steps-grid">
-    <div class="step-card">
-      <div class="step-num">1</div>
-      <h3 class="step-title">1:1 상담 신청</h3>
-      <p class="step-text">채팅 버튼을 눌러 전담 큐레이터와<br/>1:1 상담을 시작하세요</p>
-    </div>
-    <div class="step-card">
-      <div class="step-num">2</div>
-      <h3 class="step-title">멤버십 선택</h3>
-      <p class="step-text">당신의 스타일에 맞는<br/>맞춤형 멤버십 등급을 선택합니다</p>
-    </div>
-    <div class="step-card">
-      <div class="step-num">3</div>
-      <h3 class="step-title">특별한 만남 시작</h3>
-      <p class="step-text">검증된 멤버와의 설레는 인연,<br/>지금 바로 경험해 보세요</p>
-    </div>
+    <div class="step-card"><div class="step-num">1</div><h3 class="step-title">1:1 상담 신청</h3><p class="step-text">채팅 버튼을 눌러 전담 큐레이터와<br/>1:1 상담을 시작하세요</p></div>
+    <div class="step-card"><div class="step-num">2</div><h3 class="step-title">멤버십 선택</h3><p class="step-text">당신의 스타일에 맞는<br/>맞춤형 멤버십 등급을 선택합니다</p></div>
+    <div class="step-card"><div class="step-num">3</div><h3 class="step-title">특별한 만남 시작</h3><p class="step-text">검증된 멤버와의 설레는 인연,<br/>지금 바로 경험해 보세요</p></div>
   </div>
 </section>
 
@@ -445,9 +401,7 @@ img{max-width:100%;display:block}
     <div class="region-card"><div class="region-icon">📍</div><div class="region-name">대구</div><div class="region-count">매칭 가능</div></div>
     <div class="region-card"><div class="region-icon">🌏</div><div class="region-name">기타 지역</div><div class="region-count">제휴 네트워크</div></div>
   </div>
-  <div style="text-align:center;margin-top:28px">
-    <p style="font-size:13px;color:var(--text-dim)">위 지역 외에도 <strong style="color:var(--rose-gold-light)">전국 어디든</strong> 상담 가능합니다</p>
-  </div>
+  <div style="text-align:center;margin-top:28px"><p style="font-size:13px;color:var(--text-dim)">위 지역 외에도 <strong style="color:var(--rose-gold-light)">전국 어디든</strong> 상담 가능합니다</p></div>
 </section>
 
 <!-- ═══════════ 💕 TESTIMONIALS ═══════════ -->
@@ -457,30 +411,9 @@ img{max-width:100%;display:block}
     <h2 class="section-title"><span class="gold">멤버</span> 후기</h2>
   </div>
   <div class="testimonials-grid">
-    <div class="testimonial-card">
-      <div class="rating">★★★★★</div>
-      <p class="testimonial-text">"프로페셔널한 매칭에 감탄했습니다. 큐레이터님의 섬세한 큐레이션 덕분에 정말 좋은 인연을 만났어요. 보안도 철저하고 매너도 최고입니다."</p>
-      <div class="testimonial-author">
-        <div class="tier-badge">DIAMOND</div>
-        <div class="author-info">멤버 6개월</div>
-      </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="rating">★★★★★</div>
-      <p class="testimonial-text">"프라이버시가 완벽히 지켜지는 점이 가장 마음에 듭니다. 전담 큐레이터님의 서비스 퀄리티가 정말 다르네요. 추천합니다."</p>
-      <div class="testimonial-author">
-        <div class="tier-badge">GOLD</div>
-        <div class="author-info">멤버 3개월</div>
-      </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="rating">★★★★★</div>
-      <p class="testimonial-text">"출장이 잦은데 전국 어디서든 매칭이 가능해서 너무 만족스럽습니다. 큐레이터님의 센스가 뛰어나세요. 또 이용할게요."</p>
-      <div class="testimonial-author">
-        <div class="tier-badge">PLATINUM</div>
-        <div class="author-info">멤버 1년</div>
-      </div>
-    </div>
+    <div class="testimonial-card"><div class="rating">★★★★★</div><p class="testimonial-text">"프로페셔널한 매칭에 감탄했습니다. 큐레이터님의 섬세한 큐레이션 덕분에 정말 좋은 인연을 만났어요. 보안도 철저하고 매너도 최고입니다."</p><div class="testimonial-author"><div class="tier-badge">DIAMOND</div><div class="author-info">멤버 6개월</div></div></div>
+    <div class="testimonial-card"><div class="rating">★★★★★</div><p class="testimonial-text">"프라이버시가 완벽히 지켜지는 점이 가장 마음에 듭니다. 전담 큐레이터님의 서비스 퀄리티가 정말 다르네요. 추천합니다."</p><div class="testimonial-author"><div class="tier-badge">GOLD</div><div class="author-info">멤버 3개월</div></div></div>
+    <div class="testimonial-card"><div class="rating">★★★★★</div><p class="testimonial-text">"출장이 잦은데 전국 어디서든 매칭이 가능해서 너무 만족스럽습니다. 큐레이터님의 센스가 뛰어나세요. 또 이용할게요."</p><div class="testimonial-author"><div class="tier-badge">PLATINUM</div><div class="author-info">멤버 1년</div></div></div>
   </div>
 </section>
 
@@ -491,26 +424,11 @@ img{max-width:100%;display:block}
     <h2 class="section-title">자주 묻는 <span class="gold">질문</span></h2>
   </div>
   <div class="faq-list">
-    <details class="faq-item">
-      <summary>멤버십 가입은 어떻게 하나요?</summary>
-      <div class="faq-answer">채팅 상담을 통해 1:1 전담 큐레이터가 멤버십 가입 절차를 안내해 드립니다. 상담 후 바로 매칭 서비스 이용이 가능합니다.</div>
-    </details>
-    <details class="faq-item">
-      <summary>프라이버시는 어떻게 보호되나요?</summary>
-      <div class="faq-answer">모든 개인정보는 암호화 처리되며, 상담 및 매칭 서비스는 1:1 전담 채널로 진행됩니다. 외부 노출은 일절 없으며, 완벽한 비밀 보장을 약속드립니다.</div>
-    </details>
-    <details class="faq-item">
-      <summary>어떤 지역에서 이용 가능한가요?</summary>
-      <div class="faq-answer">서울, 경기, 부산, 대구 등 전국 주요 도시에 큐레이터 네트워크가 구축되어 있으며, 기타 지역도 제휴망을 통해 매칭이 가능합니다.</div>
-    </details>
-    <details class="faq-item">
-      <summary>멤버십 비용은 얼마인가요?</summary>
-      <div class="faq-answer">멤버십 등급에 따라 다양한 플랜이 준비되어 있습니다. 1:1 상담을 통해 당신에게 맞는 맞춤 플랜을 안내해 드립니다.</div>
-    </details>
-    <details class="faq-item">
-      <summary>운영 시간이 어떻게 되나요?</summary>
-      <div class="faq-answer">매일 정오(12:00)부터 자정(00:00)까지 전담 큐레이터가 실시간으로 응대합니다.</div>
-    </details>
+    <details class="faq-item"><summary>멤버십 가입은 어떻게 하나요?</summary><div class="faq-answer">채팅 상담을 통해 1:1 전담 큐레이터가 멤버십 가입 절차를 안내해 드립니다. 상담 후 바로 매칭 서비스 이용이 가능합니다.</div></details>
+    <details class="faq-item"><summary>프라이버시는 어떻게 보호되나요?</summary><div class="faq-answer">모든 개인정보는 암호화 처리되며, 상담 및 매칭 서비스는 1:1 전담 채널로 진행됩니다. 외부 노출은 일절 없으며, 완벽한 비밀 보장을 약속드립니다.</div></details>
+    <details class="faq-item"><summary>어떤 지역에서 이용 가능한가요?</summary><div class="faq-answer">서울, 경기, 부산, 대구 등 전국 주요 도시에 큐레이터 네트워크가 구축되어 있으며, 기타 지역도 제휴망을 통해 매칭이 가능합니다.</div></details>
+    <details class="faq-item"><summary>멤버십 비용은 얼마인가요?</summary><div class="faq-answer">멤버십 등급에 따라 다양한 플랜이 준비되어 있습니다. 1:1 상담을 통해 당신에게 맞는 맞춤 플랜을 안내해 드립니다.</div></details>
+    <details class="faq-item"><summary>운영 시간이 어떻게 되나요?</summary><div class="faq-answer">매일 정오(12:00)부터 자정(00:00)까지 전담 큐레이터가 실시간으로 응대합니다.</div></details>
   </div>
 </section>
 
@@ -520,11 +438,7 @@ img{max-width:100%;display:block}
     <div class="final-eyebrow">✦ Now Open ✦</div>
     <h2 class="final-title">지금 <span class="gold">BANADA</span>에서<br/>특별한 인연을 만나보세요</h2>
     <p class="final-desc">전담 큐레이터가 즉시 응대합니다 · 완벽한 프라이버시</p>
-    <button class="final-cta-btn" onclick="openChat()">
-      <span>💕</span>
-      멤버십 상담
-      <span class="cta-arrow">→</span>
-    </button>
+    <button class="final-cta-btn" onclick="openChat()"><span>💕</span> 멤버십 상담 <span class="cta-arrow">→</span></button>
     <div class="final-hint">1:1 전담 상담 · 완벽한 비밀 보장</div>
   </div>
 </section>
@@ -542,8 +456,7 @@ img{max-width:100%;display:block}
     <p class="footer-warning">본 서비스는 성인 회원 전용 프라이빗 멤버십입니다.</p>
     상호명: 주식회사 엘아이 | 대표자: 노종구 | 사업자등록번호: 650-81-00293<br/>
     주소: 서울시 강남구 도산대로 445, 6층 (청담동)<br/>
-    이메일: info@banadaofficial.com | 업태/종목: 컨설팅 / 컨설팅업<br/>
-    <br/>
+    이메일: info@banadaofficial.com | 업태/종목: 컨설팅 / 컨설팅업<br/><br/>
     © 2021 BANADA. All rights reserved.
   </div>
 </footer>
@@ -563,7 +476,7 @@ for (let i = 0; i < 18; i++) {
   petalsContainer.appendChild(p);
 }
 
-// ====== 💖 하트 플로팅 생성 ======
+// ====== 💖 하트 플로팅 ======
 const heartsContainer = document.getElementById('hearts');
 for (let i = 0; i < 12; i++) {
   const h = document.createElement('span');
@@ -576,13 +489,33 @@ for (let i = 0; i < 12; i++) {
   heartsContainer.appendChild(h);
 }
 
-// ====== Chat open + conversion tracking ======
+// ====== 💌 Chat open + Lead 전환 추적 (Pixel + CAPI 이중 전송) ======
 function openChat() {
-  // Facebook(Meta) 전환 이벤트 - 문의 시작 = Lead
+  // ★ Lead 이벤트 - 가장 중요! Pixel + CAPI 양쪽 전송
   if (typeof fbq === 'function') {
-    fbq('track', 'Lead');
+    const leadEventId = 'Lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+
+    // 1️⃣ Pixel로 전송 (브라우저)
+    fbq('track', 'Lead', { content_name: 'Consultation Request' }, { eventID: leadEventId });
+
+    // 2️⃣ CAPI로도 전송 (서버) - iOS 광고 차단 우회
+    const fbp = document.cookie.match(/_fbp=([^;]+)/)?.[1];
+    const fbc = document.cookie.match(/_fbc=([^;]+)/)?.[1];
+    fetch('/api/capi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: 'Lead',
+        event_id: leadEventId,
+        event_source_url: window.location.href,
+        fbp, fbc,
+        custom_data: { content_name: 'Consultation Request' },
+      }),
+      keepalive: true,
+    }).catch(() => {});
   }
 
+  // 채팅 위젯 열기 (기존 로직 유지)
   if (window.ssq && typeof window.ssq.push === 'function') {
     window.ssq.push('chatOpen'); return;
   }
@@ -615,7 +548,7 @@ function autoOpenChatFromURL() {
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', autoOpenChatFromURL);
 else autoOpenChatFromURL();
 
-// ====== ✅ 스크롤 깊이 추적 ======
+// ====== ✅ 스크롤 깊이 추적 (Pixel + CAPI) ======
 (function(){
   var fired50 = false, fired75 = false;
   function onScroll(){
@@ -627,13 +560,17 @@ else autoOpenChatFromURL();
     if (!fired50 && pct >= 50) {
       fired50 = true;
       if (typeof fbq === 'function') {
-        fbq('trackCustom', 'ScrollDepth50', { page: 'landing' });
+        const eid = 'ScrollDepth50_' + Date.now();
+        fbq('trackCustom', 'ScrollDepth50', { page: 'landing' }, { eventID: eid });
+        sendToCAPI && sendToCAPI('ScrollDepth50', eid, { page: 'landing' });
       }
     }
     if (!fired75 && pct >= 75) {
       fired75 = true;
       if (typeof fbq === 'function') {
-        fbq('trackCustom', 'ScrollDepth75', { page: 'landing' });
+        const eid = 'ScrollDepth75_' + Date.now();
+        fbq('trackCustom', 'ScrollDepth75', { page: 'landing' }, { eventID: eid });
+        sendToCAPI && sendToCAPI('ScrollDepth75', eid, { page: 'landing' });
       }
     }
     if (fired50 && fired75) {

@@ -1,0 +1,10 @@
+{
+  "name": "banada-landing",
+  "version": "1.0.0",
+  "description": "BANADA Landing Page with Meta CAPI",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  }
+}
