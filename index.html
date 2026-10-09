@@ -19,8 +19,6 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 
 fbq('init', '1073540018723521');
 
-// ★ event_id로 Pixel + CAPI 중복 제거
-// 같은 event_id를 Pixel과 CAPI 양쪽에 전송하면 Meta가 자동 중복 제거
 window.__banadaEventIds = {};
 function makeEventId(name) {
   const id = name + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
@@ -28,19 +26,17 @@ function makeEventId(name) {
   return id;
 }
 
-// PageView - Pixel + CAPI 양쪽 전송
-const pvEventId = makeEventId('PageView');
-fbq('track', 'PageView', {}, { eventID: pvEventId });
+const metaPvId = makeEventId('PageView');
+fbq('track', 'PageView', {}, { eventID: metaPvId });
 
-// ViewContent - 랜딩 조회 품질 지표
-const vcEventId = makeEventId('ViewContent');
+const metaVcId = makeEventId('ViewContent');
 fbq('track', 'ViewContent',
   { content_name: 'Landing Page', content_category: 'landing' },
-  { eventID: vcEventId }
+  { eventID: metaVcId }
 );
 
-// CAPI로도 동일 이벤트 전송 (서버에서)
-function sendToCAPI(eventName, eventId, customData) {
+// Meta CAPI 전송 함수
+function sendToMetaCAPI(eventName, eventId, customData) {
   const fbp = document.cookie.match(/_fbp=([^;]+)/)?.[1];
   const fbc = document.cookie.match(/_fbc=([^;]+)/)?.[1];
   fetch('/api/capi', {
@@ -53,21 +49,77 @@ function sendToCAPI(eventName, eventId, customData) {
       fbp, fbc,
       custom_data: customData || {},
     }),
-    keepalive: true, // 페이지 이동 시에도 전송 보장
+    keepalive: true,
   }).catch(() => {});
 }
 
-// PageView, ViewContent를 CAPI에도 전송
-// (쿠키 설정 지연 대응 - 500ms 지연 후 전송)
 setTimeout(() => {
-  sendToCAPI('PageView', pvEventId);
-  sendToCAPI('ViewContent', vcEventId, { content_name: 'Landing Page' });
+  sendToMetaCAPI('PageView', metaPvId);
+  sendToMetaCAPI('ViewContent', metaVcId, { content_name: 'Landing Page' });
 }, 500);
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1073540018723521&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
+<!-- ============================================ -->
+<!-- ✅ TikTok Pixel + Events API 통합 -->
+<!-- ============================================ -->
+<script>
+!function (w, d, t) {
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+  ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+  ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+  for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+  ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+  ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;
+  ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+  n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;
+  e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+  ttq.load('DB48JHBC77U534NEKCC0');
+  
+  const ttPvId = makeEventId('TT_ViewContent');
+  ttq.track('ViewContent', {
+    content_name: 'Landing Page',
+    content_category: 'landing',
+    content_type: 'product',
+  }, { event_id: ttPvId });
+}(window, document, 'ttq');
+
+// TikTok Events API (서버사이드) 전송 함수
+function sendToTikTokAPI(eventName, eventId, properties) {
+  const ttclid = new URLSearchParams(window.location.search).get('ttclid') ||
+                 document.cookie.match(/ttclid=([^;]+)/)?.[1];
+  const ttp = document.cookie.match(/_ttp=([^;]+)/)?.[1];
+  fetch('/api/tiktok', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event_name: eventName,
+      event_id: eventId,
+      event_source_url: window.location.href,
+      ttclid, ttp,
+      properties: properties || {},
+    }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
+// 랜딩 뷰 - TikTok API로도 전송
+setTimeout(() => {
+  const ttVcId = window.__banadaEventIds['TT_ViewContent'];
+  if (ttVcId) {
+    sendToTikTokAPI('ViewContent', ttVcId, {
+      content_name: 'Landing Page',
+      content_category: 'landing',
+      content_type: 'product',
+    });
+  }
+}, 700);
+</script>
+<!-- End TikTok Pixel Code -->
 
 <!-- ✅ 모바일/아이폰 안전 viewport -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -115,7 +167,6 @@ src="https://www.facebook.com/tr?id=1073540018723521&ev=PageView&noscript=1"
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ====== 🎨 Color System ====== */
 :root{
   --bg-deep:#120410;
   --bg:#1f0817;
@@ -163,7 +214,6 @@ img{max-width:100%;display:block}
   50%{box-shadow:0 15px 60px var(--heart-glow),0 0 30px var(--rose-gold-glow)}
 }
 
-/* Hero */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at top,#4e1835 0%,#2a0d1f 40%,#120410 100%)}
 .hero-overlay{position:absolute;inset:0;background:radial-gradient(circle at 25% 35%,rgba(230,57,117,.1) 0%,transparent 50%),radial-gradient(circle at 75% 65%,rgba(212,165,116,.08) 0%,transparent 50%)}
@@ -189,7 +239,6 @@ img{max-width:100%;display:block}
 .trust-divider{width:1px;height:36px;background:rgba(212,165,116,.3)}
 .scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:5px;color:rgba(212,165,116,.6);font-weight:600;animation:scrollBounce 2s ease-in-out infinite;text-transform:uppercase}
 
-/* Sections */
 .section{padding:100px 20px;position:relative}
 .section.wine{background:linear-gradient(180deg,var(--bg) 0%,var(--wine) 100%)}
 .section.deep{background:var(--bg-deep)}
@@ -202,7 +251,6 @@ img{max-width:100%;display:block}
 .section-title .italic{font-style:italic;font-weight:500;background:linear-gradient(135deg,var(--rose-gold-light),var(--heart));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .section-desc{font-size:15px;color:var(--text-muted);line-height:1.7;font-weight:300}
 
-/* Feature Cards */
 .concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;max-width:1100px;margin:0 auto}
 .concept-card{padding:40px 36px;background:linear-gradient(160deg,rgba(255,107,157,.04),rgba(212,165,116,.04),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.2);border-radius:20px;transition:all .4s;position:relative;overflow:hidden}
 .concept-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,107,157,.08),transparent);transition:left .6s}
@@ -212,7 +260,6 @@ img{max-width:100%;display:block}
 .concept-title{font-size:22px;font-weight:700;margin-bottom:14px;font-family:'Playfair Display','Noto Serif KR',serif;color:#fff}
 .concept-text{font-size:14px;color:var(--text-muted);line-height:1.75}
 
-/* Atmosphere Cards */
 .atmo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:1100px;margin:0 auto}
 .atmo-card{position:relative;padding:48px 28px 36px;background:linear-gradient(180deg,rgba(230,57,117,.08) 0%,rgba(74,24,48,.4) 100%);border:1px solid rgba(255,107,157,.2);border-radius:20px;overflow:hidden;transition:all .35s;text-align:center}
 .atmo-card:hover{transform:translateY(-6px);border-color:var(--pink);box-shadow:0 20px 50px rgba(230,57,117,.25)}
@@ -224,7 +271,6 @@ img{max-width:100%;display:block}
 .cta-secondary{display:inline-flex;align-items:center;gap:10px;padding:14px 34px;background:transparent;color:var(--rose-gold-light);border:1.5px solid var(--rose-gold);border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;font-family:'Noto Sans KR',sans-serif;letter-spacing:.5px}
 .cta-secondary:hover{background:linear-gradient(135deg,var(--heart),var(--pink));border-color:transparent;color:#fff;transform:translateY(-2px);box-shadow:0 10px 30px var(--heart-glow)}
 
-/* Steps */
 .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1100px;margin:0 auto}
 .step-card{padding:40px 32px;text-align:center;background:linear-gradient(160deg,rgba(212,165,116,.06),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.2);border-radius:20px;position:relative;transition:all .35s}
 .step-card:hover{border-color:var(--pink);transform:translateY(-4px)}
@@ -232,7 +278,6 @@ img{max-width:100%;display:block}
 .step-title{font-size:20px;font-weight:700;margin-bottom:12px;font-family:'Playfair Display','Noto Serif KR',serif;color:#fff}
 .step-text{font-size:14px;color:var(--text-muted);line-height:1.7}
 
-/* Regions */
 .region-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:900px;margin:0 auto}
 .region-card{padding:22px 14px;text-align:center;background:linear-gradient(160deg,rgba(255,107,157,.04),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.18);border-radius:14px;transition:all .3s}
 .region-card:hover{border-color:var(--pink);background:linear-gradient(160deg,rgba(255,107,157,.1),rgba(0,0,0,.3));transform:translateY(-3px)}
@@ -240,7 +285,6 @@ img{max-width:100%;display:block}
 .region-name{font-size:14px;font-weight:700;color:var(--rose-gold-light);margin-bottom:4px;font-family:'Noto Sans KR',sans-serif}
 .region-count{font-size:10px;color:var(--text-dim)}
 
-/* Testimonials */
 .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1100px;margin:0 auto}
 .testimonial-card{padding:32px 28px;background:linear-gradient(160deg,rgba(212,165,116,.05),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.2);border-radius:20px;transition:all .35s;position:relative}
 .testimonial-card::before{content:'❝';position:absolute;top:16px;right:20px;font-size:50px;color:rgba(212,165,116,.15);line-height:1;font-family:serif}
@@ -251,7 +295,6 @@ img{max-width:100%;display:block}
 .tier-badge{padding:4px 12px;background:linear-gradient(135deg,var(--heart),var(--pink));color:#fff;font-size:10px;font-weight:800;letter-spacing:1.5px;border-radius:50px}
 .author-info{font-size:12px;color:var(--text-dim)}
 
-/* FAQ */
 .faq-list{max-width:800px;margin:0 auto}
 .faq-item{margin-bottom:14px;background:linear-gradient(160deg,rgba(212,165,116,.04),rgba(0,0,0,.3));border:1px solid rgba(212,165,116,.15);border-radius:14px;overflow:hidden;transition:border-color .3s}
 .faq-item:hover{border-color:rgba(255,107,157,.4)}
@@ -262,7 +305,6 @@ img{max-width:100%;display:block}
 .faq-item[open] summary{color:var(--pink)}
 .faq-answer{padding:0 26px 24px;font-size:14px;color:var(--text-muted);line-height:1.75}
 
-/* Final CTA */
 .final-cta{text-align:center;padding:120px 20px;background:radial-gradient(ellipse at center,rgba(230,57,117,.15) 0%,var(--bg-deep) 60%);position:relative;overflow:hidden}
 .final-content{position:relative;z-index:2;max-width:720px;margin:0 auto}
 .final-eyebrow{display:inline-block;padding:6px 20px;background:linear-gradient(135deg,rgba(230,57,117,.15),rgba(212,165,116,.15));border:1px solid var(--rose-gold);border-radius:50px;color:var(--rose-gold-light);font-size:11px;font-weight:700;letter-spacing:4px;margin-bottom:20px}
@@ -272,7 +314,6 @@ img{max-width:100%;display:block}
 .final-cta-btn:hover{transform:translateY(-3px) scale(1.02);background-position:right center}
 .final-hint{margin-top:16px;font-size:12px;color:var(--text-dim);letter-spacing:1px}
 
-/* Footer */
 .footer{background:var(--bg-deep);padding:60px 20px 40px;text-align:center;border-top:1px solid rgba(212,165,116,.15)}
 .footer-logo{font-size:28px;font-family:'Playfair Display',serif;background:linear-gradient(135deg,var(--rose-gold-light),var(--pink),var(--rose-gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800;letter-spacing:2px;margin-bottom:10px}
 .footer-slogan{font-size:12px;color:var(--rose-gold-light);font-style:italic;letter-spacing:2px;margin-bottom:24px;font-family:'Cormorant Garamond',serif}
@@ -282,7 +323,6 @@ img{max-width:100%;display:block}
 .footer-info{font-size:11px;color:var(--text-dim);line-height:1.9;margin-top:20px}
 .footer-warning{font-size:12px;color:var(--rose-gold);font-weight:600;margin-bottom:12px}
 
-/* Responsive */
 @media(max-width:640px){
   .hero-logo{width:150px;height:150px}
   .trust-badges{gap:20px}
@@ -300,7 +340,6 @@ img{max-width:100%;display:block}
 </head>
 <body>
 
-<!-- ═══════════ 🌸 HERO ═══════════ -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
@@ -326,7 +365,6 @@ img{max-width:100%;display:block}
   <div class="scroll-hint">Scroll</div>
 </section>
 
-<!-- ═══════════ 💎 FEATURES ═══════════ -->
 <section class="section wine">
   <div class="section-header">
     <div class="eyebrow">THE EXPERIENCE</div>
@@ -352,7 +390,6 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
-<!-- ═══════════ 🌹 ATMOSPHERE ═══════════ -->
 <section class="section alt">
   <div class="section-header">
     <div class="eyebrow">PRIVATE MOMENT</div>
@@ -370,7 +407,6 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
-<!-- ═══════════ 💝 HOW IT WORKS ═══════════ -->
 <section class="section">
   <div class="section-header">
     <div class="eyebrow">HOW IT WORKS</div>
@@ -384,7 +420,6 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
-<!-- ═══════════ 📍 REGIONS ═══════════ -->
 <section class="section wine">
   <div class="section-header">
     <div class="eyebrow">NATIONWIDE</div>
@@ -404,7 +439,6 @@ img{max-width:100%;display:block}
   <div style="text-align:center;margin-top:28px"><p style="font-size:13px;color:var(--text-dim)">위 지역 외에도 <strong style="color:var(--rose-gold-light)">전국 어디든</strong> 상담 가능합니다</p></div>
 </section>
 
-<!-- ═══════════ 💕 TESTIMONIALS ═══════════ -->
 <section class="section">
   <div class="section-header">
     <div class="eyebrow">MEMBER STORIES</div>
@@ -417,7 +451,6 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
-<!-- ═══════════ 💬 FAQ ═══════════ -->
 <section class="section alt">
   <div class="section-header">
     <div class="eyebrow">FAQ</div>
@@ -432,7 +465,6 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
-<!-- ═══════════ 🎁 FINAL CTA ═══════════ -->
 <section class="final-cta">
   <div class="final-content">
     <div class="final-eyebrow">✦ Now Open ✦</div>
@@ -443,7 +475,6 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
-<!-- ═══════════ Footer ═══════════ -->
 <footer class="footer">
   <div class="footer-logo">BANADA</div>
   <div class="footer-slogan">Where destiny meets.</div>
@@ -462,7 +493,7 @@ img{max-width:100%;display:block}
 </footer>
 
 <script>
-// ====== 🌸 벚꽃 꽃잎 생성 ======
+// 벚꽃 꽃잎 생성
 const petalsContainer = document.getElementById('petals');
 const petalChars = ['🌸','🌸','🌸','✿','✿','❀','🌸'];
 for (let i = 0; i < 18; i++) {
@@ -476,7 +507,7 @@ for (let i = 0; i < 18; i++) {
   petalsContainer.appendChild(p);
 }
 
-// ====== 💖 하트 플로팅 ======
+// 하트 플로팅
 const heartsContainer = document.getElementById('hearts');
 for (let i = 0; i < 12; i++) {
   const h = document.createElement('span');
@@ -489,16 +520,16 @@ for (let i = 0; i < 12; i++) {
   heartsContainer.appendChild(h);
 }
 
-// ====== 💌 Chat open + Lead 전환 추적 (Pixel + CAPI 이중 전송) ======
+// ====== 💌 Chat open + Lead 전환 추적 (Meta + TikTok 양쪽 전송) ======
 function openChat() {
-  // ★ Lead 이벤트 - 가장 중요! Pixel + CAPI 양쪽 전송
-  if (typeof fbq === 'function') {
-    const leadEventId = 'Lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+  // ★ Lead 이벤트 - 가장 중요! Meta + TikTok 양쪽 Pixel + Server 전송
 
-    // 1️⃣ Pixel로 전송 (브라우저)
+  const leadEventId = 'Lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+
+  // 1️⃣ Meta Pixel + CAPI
+  if (typeof fbq === 'function') {
     fbq('track', 'Lead', { content_name: 'Consultation Request' }, { eventID: leadEventId });
 
-    // 2️⃣ CAPI로도 전송 (서버) - iOS 광고 차단 우회
     const fbp = document.cookie.match(/_fbp=([^;]+)/)?.[1];
     const fbc = document.cookie.match(/_fbc=([^;]+)/)?.[1];
     fetch('/api/capi', {
@@ -510,6 +541,34 @@ function openChat() {
         event_source_url: window.location.href,
         fbp, fbc,
         custom_data: { content_name: 'Consultation Request' },
+      }),
+      keepalive: true,
+    }).catch(() => {});
+  }
+
+  // 2️⃣ TikTok Pixel + eAPI
+  if (typeof ttq !== 'undefined' && ttq.track) {
+    const ttLeadId = 'TT_Lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+    ttq.track('Lead', {
+      content_name: 'Consultation Request',
+      content_type: 'product',
+    }, { event_id: ttLeadId });
+
+    const ttclid = new URLSearchParams(window.location.search).get('ttclid') ||
+                   document.cookie.match(/ttclid=([^;]+)/)?.[1];
+    const ttp = document.cookie.match(/_ttp=([^;]+)/)?.[1];
+    fetch('/api/tiktok', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: 'Lead',
+        event_id: ttLeadId,
+        event_source_url: window.location.href,
+        ttclid, ttp,
+        properties: {
+          content_name: 'Consultation Request',
+          content_type: 'product',
+        },
       }),
       keepalive: true,
     }).catch(() => {});
@@ -530,7 +589,7 @@ function openChat() {
   }, 800);
 }
 
-// ====== Auto-open from URL param ======
+// Auto-open from URL param
 function autoOpenChatFromURL() {
   const chatParam = new URLSearchParams(window.location.search).get('chat');
   if (chatParam === 'open' || chatParam === '1' || chatParam === 'true') {
@@ -548,7 +607,7 @@ function autoOpenChatFromURL() {
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', autoOpenChatFromURL);
 else autoOpenChatFromURL();
 
-// ====== ✅ 스크롤 깊이 추적 (Pixel + CAPI) ======
+// ====== ✅ 스크롤 깊이 추적 (Meta + TikTok 양쪽) ======
 (function(){
   var fired50 = false, fired75 = false;
   function onScroll(){
@@ -559,18 +618,20 @@ else autoOpenChatFromURL();
     var pct = (scrollTop / scrollHeight) * 100;
     if (!fired50 && pct >= 50) {
       fired50 = true;
+      // Meta
       if (typeof fbq === 'function') {
         const eid = 'ScrollDepth50_' + Date.now();
         fbq('trackCustom', 'ScrollDepth50', { page: 'landing' }, { eventID: eid });
-        sendToCAPI && sendToCAPI('ScrollDepth50', eid, { page: 'landing' });
+        sendToMetaCAPI && sendToMetaCAPI('ScrollDepth50', eid, { page: 'landing' });
       }
     }
     if (!fired75 && pct >= 75) {
       fired75 = true;
+      // Meta
       if (typeof fbq === 'function') {
         const eid = 'ScrollDepth75_' + Date.now();
         fbq('trackCustom', 'ScrollDepth75', { page: 'landing' }, { eventID: eid });
-        sendToCAPI && sendToCAPI('ScrollDepth75', eid, { page: 'landing' });
+        sendToMetaCAPI && sendToMetaCAPI('ScrollDepth75', eid, { page: 'landing' });
       }
     }
     if (fired50 && fired75) {
